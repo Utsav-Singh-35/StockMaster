@@ -178,9 +178,9 @@ export default function ProductsDashboard() {
 
   const getStatusColor = (status: string) => {
     const colors = {
-      'In Stock': 'bg-green-100 text-green-700 border-green-200',
-      'Low Stock': 'bg-yellow-100 text-yellow-700 border-yellow-200',
-      'Out of Stock': 'bg-red-100 text-red-700 border-red-200',
+      'In Stock': 'bg-green-900/50 text-green-300 border-green-700',
+      'Low Stock': 'bg-yellow-900/50 text-yellow-300 border-yellow-700',
+      'Out of Stock': 'bg-red-900/50 text-red-300 border-red-700',
     };
     return colors[status as keyof typeof colors];
   };
@@ -223,12 +223,12 @@ export default function ProductsDashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Products</h1>
-            <p className="text-slate-600 mt-1">Manage your inventory catalog</p>
+            <h1 className="text-3xl font-bold text-white">Products</h1>
+            <p className="text-gray-400 mt-1">Manage your inventory catalog</p>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all"
+            className="flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all"
           >
             <Plus size={20} />
             Create Product
@@ -240,15 +240,15 @@ export default function ProductsDashboard() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-xl p-6 shadow-lg"
+            className="bg-gray-900 border border-gray-800 rounded-xl p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Total Products</p>
-                <p className="text-3xl font-bold text-slate-900 mt-1">{products.length}</p>
+                <p className="text-sm text-gray-400">Total Products</p>
+                <p className="text-3xl font-bold text-white mt-1">{products.length}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <Package className="text-blue-600" size={24} />
+              <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                <Package className="text-orange-500" size={24} />
               </div>
             </div>
           </motion.div>
@@ -257,15 +257,15 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-xl p-6 shadow-lg"
+            className="bg-gray-900 border border-gray-800 rounded-xl p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Low Stock Items</p>
-                <p className="text-3xl font-bold text-red-600 mt-1">{lowStockCount}</p>
+                <p className="text-sm text-gray-400">Low Stock Items</p>
+                <p className="text-3xl font-bold text-red-500 mt-1">{lowStockCount}</p>
               </div>
-              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                <AlertTriangle className="text-red-600" size={24} />
+              <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
+                <AlertTriangle className="text-red-500" size={24} />
               </div>
             </div>
           </motion.div>
@@ -274,15 +274,15 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-xl p-6 shadow-lg"
+            className="bg-gray-900 border border-gray-800 rounded-xl p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Categories</p>
-                <p className="text-3xl font-bold text-slate-900 mt-1">{categories.length - 1}</p>
+                <p className="text-sm text-gray-400">Categories</p>
+                <p className="text-3xl font-bold text-white mt-1">{categories.length - 1}</p>
               </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <Grid className="text-purple-600" size={24} />
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <Grid className="text-purple-500" size={24} />
               </div>
             </div>
           </motion.div>
@@ -291,52 +291,52 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-xl p-6 shadow-lg"
+            className="bg-gray-900 border border-gray-800 rounded-xl p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Total Stock Value</p>
-                <p className="text-3xl font-bold text-green-600 mt-1">
+                <p className="text-sm text-gray-400">Total Stock Value</p>
+                <p className="text-3xl font-bold text-green-500 mt-1">
                   {products.reduce((sum, p) => sum + p.totalStock, 0)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <TrendingUp className="text-green-600" size={24} />
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <TrendingUp className="text-green-500" size={24} />
               </div>
             </div>
           </motion.div>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-xl p-6 shadow-lg space-y-4">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search by product name or SKU..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                className="w-full pl-12 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 flex items-center gap-2"
+                className="px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl hover:bg-gray-700 flex items-center gap-2 text-gray-300"
               >
                 <Filter size={20} />
                 Filters
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`px-4 py-3 rounded-xl ${viewMode === 'list' ? 'bg-indigo-600 text-white' : 'border border-slate-200 hover:bg-slate-50'}`}
+                className={`px-4 py-3 rounded-xl ${viewMode === 'list' ? 'bg-orange-500 text-white' : 'bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-300'}`}
               >
                 <List size={20} />
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-4 py-3 rounded-xl ${viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'border border-slate-200 hover:bg-slate-50'}`}
+                className={`px-4 py-3 rounded-xl ${viewMode === 'grid' ? 'bg-orange-500 text-white' : 'bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-300'}`}
               >
                 <Grid size={20} />
               </button>
@@ -347,10 +347,10 @@ export default function ProductsDashboard() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="space-y-4 pt-4 border-t border-slate-200"
+              className="space-y-4 pt-4 border-t border-gray-700"
             >
               <div>
-                <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
+                <label className="text-sm font-medium text-gray-300 mb-2 block">Category</label>
                 <div className="flex flex-wrap gap-2">
                   {categories.map(cat => (
                     <button
@@ -358,8 +358,8 @@ export default function ProductsDashboard() {
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                         selectedCategory === cat
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                          ? 'bg-orange-500 text-white'
+                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                       }`}
                     >
                       {cat}
@@ -369,12 +369,12 @@ export default function ProductsDashboard() {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-slate-700 mb-2 block">Sort By</label>
+                <label className="text-sm font-medium text-gray-300 mb-2 block">Sort By</label>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setSortBy('name')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'name' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+                      sortBy === 'name' ? 'bg-orange-500 text-white' : 'bg-gray-800 text-gray-300'
                     }`}
                   >
                     A → Z
@@ -382,7 +382,7 @@ export default function ProductsDashboard() {
                   <button
                     onClick={() => setSortBy('stock')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'stock' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+                      sortBy === 'stock' ? 'bg-orange-500 text-white' : 'bg-gray-800 text-gray-300'
                     }`}
                   >
                     Highest Stock
@@ -390,7 +390,7 @@ export default function ProductsDashboard() {
                   <button
                     onClick={() => setSortBy('lowStock')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'lowStock' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+                      sortBy === 'lowStock' ? 'bg-orange-500 text-white' : 'bg-gray-800 text-gray-300'
                     }`}
                   >
                     Low Stock First
@@ -403,52 +403,52 @@ export default function ProductsDashboard() {
 
         {/* Products Display */}
         {loading ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <div className="text-lg text-slate-600">Loading products...</div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
+            <div className="text-lg text-gray-300">Loading products...</div>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <Package className="mx-auto text-slate-400 mb-4" size={48} />
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">No products found</h3>
-            <p className="text-slate-600">Try adjusting your search or filters</p>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
+            <Package className="mx-auto text-gray-400 mb-4" size={48} />
+            <h3 className="text-xl font-semibold text-white mb-2">No products found</h3>
+            <p className="text-gray-400">Try adjusting your search or filters</p>
           </div>
         ) : viewMode === 'list' ? (
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-slate-50">
+                <thead className="bg-gray-800">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Product</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">SKU</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Category</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Total Stock</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Reorder Level</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Product</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">SKU</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Category</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Total Stock</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Reorder Level</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200">
+                <tbody className="divide-y divide-gray-800">
                   {filteredProducts.map((product) => (
                     <>
-                      <tr key={product.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={product.id} className="hover:bg-gray-800/50 transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <button
                               onClick={() => toggleRowExpansion(product.id)}
-                              className="text-slate-400 hover:text-slate-600"
+                              className="text-gray-400 hover:text-gray-300"
                             >
                               {expandedRows.has(product.id) ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                             </button>
                             <div className={`w-3 h-3 rounded-full ${getStockIndicator(product)}`}></div>
-                            <span className="font-medium text-slate-900">{product.name}</span>
+                            <span className="font-medium text-white">{product.name}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-sm text-slate-700">{product.sku}</td>
-                        <td className="px-6 py-4 text-sm text-slate-700">{product.category}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-slate-900">
+                        <td className="px-6 py-4 text-sm text-gray-300">{product.sku}</td>
+                        <td className="px-6 py-4 text-sm text-gray-300">{product.category}</td>
+                        <td className="px-6 py-4 text-sm font-medium text-white">
                           {product.totalStock} {product.unit}
                         </td>
-                        <td className="px-6 py-4 text-sm text-slate-700">
+                        <td className="px-6 py-4 text-sm text-gray-300">
                           {product.reorderLevel} {product.unit}
                         </td>
                         <td className="px-6 py-4">
@@ -460,7 +460,7 @@ export default function ProductsDashboard() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => setSelectedProduct(product)}
-                              className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                              className="text-orange-500 hover:text-orange-400 text-sm font-medium"
                             >
                               View
                             </button>
@@ -469,7 +469,7 @@ export default function ProductsDashboard() {
                                 e.stopPropagation();
                                 handleEditProduct(product);
                               }}
-                              className="text-slate-400 hover:text-slate-600"
+                              className="text-gray-400 hover:text-gray-300"
                             >
                               <Edit size={16} />
                             </button>
@@ -478,14 +478,14 @@ export default function ProductsDashboard() {
                       </tr>
                       {expandedRows.has(product.id) && (
                         <tr>
-                          <td colSpan={7} className="px-6 py-4 bg-slate-50">
+                          <td colSpan={7} className="px-6 py-4 bg-gray-800">
                             <div className="space-y-3">
-                              <h4 className="font-semibold text-slate-900">Stock by Location</h4>
+                              <h4 className="font-semibold text-white">Stock by Location</h4>
                               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {product.locations.map((loc, idx) => (
-                                  <div key={idx} className="bg-white rounded-lg p-4 border border-slate-200">
-                                    <p className="text-sm text-slate-600">{loc.warehouse}</p>
-                                    <p className="text-xl font-bold text-slate-900 mt-1">
+                                  <div key={idx} className="bg-gray-700 rounded-lg p-4 border border-gray-600">
+                                    <p className="text-sm text-gray-400">{loc.warehouse}</p>
+                                    <p className="text-xl font-bold text-white mt-1">
                                       {loc.quantity} {product.unit}
                                     </p>
                                   </div>
@@ -509,15 +509,15 @@ export default function ProductsDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer"
+                className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-500/50 transition-all cursor-pointer"
                 onClick={() => setSelectedProduct(product)}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded-full ${getStockIndicator(product)}`}></div>
                     <div>
-                      <h3 className="font-semibold text-slate-900">{product.name}</h3>
-                      <p className="text-sm text-slate-600">{product.sku}</p>
+                      <h3 className="font-semibold text-white">{product.name}</h3>
+                      <p className="text-sm text-gray-400">{product.sku}</p>
                     </div>
                   </div>
                   <button 
@@ -525,26 +525,26 @@ export default function ProductsDashboard() {
                       e.stopPropagation();
                       handleEditProduct(product);
                     }}
-                    className="text-slate-400 hover:text-slate-600"
+                    className="text-gray-400 hover:text-gray-300"
                   >
                     <Edit size={16} />
                   </button>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-600">Category:</span>
-                    <span className="font-medium text-slate-900">{product.category}</span>
+                    <span className="text-gray-400">Category:</span>
+                    <span className="font-medium text-white">{product.category}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-600">Total Stock:</span>
-                    <span className="font-bold text-slate-900">{product.totalStock} {product.unit}</span>
+                    <span className="text-gray-400">Total Stock:</span>
+                    <span className="font-bold text-white">{product.totalStock} {product.unit}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-600">Reorder Level:</span>
-                    <span className="text-slate-700">{product.reorderLevel} {product.unit}</span>
+                    <span className="text-gray-400">Reorder Level:</span>
+                    <span className="text-gray-300">{product.reorderLevel} {product.unit}</span>
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t border-slate-200">
+                <div className="mt-4 pt-4 border-t border-gray-700">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
                     {product.status}
                   </span>
@@ -685,21 +685,21 @@ export default function ProductsDashboard() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-slate-900">Create New Product</h2>
+                  <h2 className="text-2xl font-bold text-white">Create New Product</h2>
                   <button
                     onClick={() => setShowCreateModal(false)}
-                    className="p-2 hover:bg-slate-100 rounded-lg"
+                    className="p-2 hover:bg-gray-800 rounded-lg"
                   >
-                    <X size={24} />
+                    <X size={24} className="text-gray-400" />
                   </button>
                 </div>
 
                 {createError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                  <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-xl">
                     {createError}
                   </div>
                 )}

@@ -101,57 +101,57 @@ export default function Adjustments() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Stock Adjustments</h1>
-            <p className="text-slate-600 mt-1">Fix discrepancies between recorded and physical stock</p>
+            <h1 className="text-3xl font-bold text-white">Stock Adjustments</h1>
+            <p className="text-gray-400 mt-1">Fix discrepancies between recorded and physical stock</p>
           </div>
           <button 
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 shadow-lg"
+            className="flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all"
           >
             <Plus size={20} />
             Create Adjustment
           </button>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-lg">
-          <div className="flex items-center gap-3 text-amber-700 bg-amber-50 p-4 rounded-xl">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div className="flex items-center gap-3 text-amber-300 bg-amber-900/30 border border-amber-700/50 p-4 rounded-xl">
             <AlertCircle size={24} />
             <p className="text-sm">Stock adjustments directly affect inventory levels. Always verify physical counts before adjusting.</p>
           </div>
         </div>
 
         {loading ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <div className="text-lg text-slate-600">Loading adjustments...</div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
+            <div className="text-lg text-gray-300">Loading adjustments...</div>
           </div>
         ) : (
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
           <table className="w-full">
-            <thead className="bg-slate-50">
+            <thead className="bg-gray-800">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Adjustment ID</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Product</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Recorded</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Counted</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Difference</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Reason</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Date</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Adjustment ID</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Product</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Recorded</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Counted</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Difference</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Reason</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-gray-800">
               {adjustments.map((adj) => (
-                <tr key={adj.id} className="hover:bg-slate-50">
-                  <td className="px-6 py-4 text-sm font-medium">{adj.id}</td>
-                  <td className="px-6 py-4 text-sm">{adj.product}</td>
-                  <td className="px-6 py-4 text-sm">{adj.recorded}</td>
-                  <td className="px-6 py-4 text-sm font-bold">{adj.counted}</td>
+                <tr key={adj.id} className="hover:bg-gray-800/50">
+                  <td className="px-6 py-4 text-sm font-medium text-white">{adj.id}</td>
+                  <td className="px-6 py-4 text-sm text-gray-300">{adj.product}</td>
+                  <td className="px-6 py-4 text-sm text-gray-300">{adj.recorded}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-white">{adj.counted}</td>
                   <td className="px-6 py-4">
-                    <span className={`font-bold ${adj.difference > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span className={`font-bold ${adj.difference > 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {adj.difference > 0 ? '+' : ''}{adj.difference}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm">{adj.reason}</td>
-                  <td className="px-6 py-4 text-sm">{adj.date}</td>
+                  <td className="px-6 py-4 text-sm text-gray-300">{adj.reason}</td>
+                  <td className="px-6 py-4 text-sm text-gray-300">{adj.date}</td>
                 </tr>
               ))}
             </tbody>
@@ -173,20 +173,20 @@ export default function Adjustments() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-slate-900">Create Stock Adjustment</h2>
+                  <h2 className="text-2xl font-bold text-white">Create Stock Adjustment</h2>
                   <button
                     onClick={() => setShowCreateModal(false)}
-                    className="p-2 hover:bg-slate-100 rounded-lg"
+                    className="p-2 hover:bg-gray-800 rounded-lg"
                   >
-                    <X size={24} />
+                    <X size={24} className="text-gray-400" />
                   </button>
                 </div>
 
-                <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl mb-6 flex items-start gap-3">
+                <div className="bg-amber-900/30 border border-amber-700/50 text-amber-300 px-4 py-3 rounded-xl mb-6 flex items-start gap-3">
                   <AlertCircle size={20} className="flex-shrink-0 mt-0.5" />
                   <p className="text-sm">
                     This will immediately update stock levels. Make sure you have physically counted the inventory before proceeding.
@@ -194,7 +194,7 @@ export default function Adjustments() {
                 </div>
 
                 {createError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
+                  <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-xl mb-6">
                     {createError}
                   </div>
                 )}
@@ -202,12 +202,12 @@ export default function Adjustments() {
                 <form onSubmit={handleCreateAdjustment} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Product</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Product</label>
                       <select
                         value={createFormData.productId}
                         onChange={(e) => setCreateFormData({ ...createFormData, productId: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select product</option>
                         {products.map((product) => (
@@ -219,12 +219,12 @@ export default function Adjustments() {
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Warehouse</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Warehouse</label>
                       <select
                         value={createFormData.warehouseId}
                         onChange={(e) => setCreateFormData({ ...createFormData, warehouseId: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select warehouse</option>
                         {warehouses.map((warehouse) => (
@@ -237,7 +237,7 @@ export default function Adjustments() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">
                       Counted Quantity (Physical Count)
                     </label>
                     <input
@@ -248,33 +248,33 @@ export default function Adjustments() {
                       onChange={(e) => setCreateFormData({ ...createFormData, countedQuantity: e.target.value })}
                       required
                       min="0"
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                     />
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-gray-400 mt-1">
                       The system will calculate the difference from recorded quantity automatically
                     </p>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Reason for Adjustment</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Reason for Adjustment</label>
                     <textarea
                       rows={3}
                       placeholder="e.g., Physical count discrepancy, Damaged goods, Theft, etc."
                       value={createFormData.reason}
                       onChange={(e) => setCreateFormData({ ...createFormData, reason: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400 resize-none"
                     ></textarea>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Adjustment Date</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Adjustment Date</label>
                     <input
                       type="date"
                       value={createFormData.adjustmentDate}
                       onChange={(e) => setCreateFormData({ ...createFormData, adjustmentDate: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                     />
                   </div>
 
@@ -283,14 +283,14 @@ export default function Adjustments() {
                       type="button"
                       onClick={() => setShowCreateModal(false)}
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 font-medium disabled:opacity-50 transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {createLoading ? 'Creating...' : 'Create Adjustment'}
                     </button>
