@@ -15,7 +15,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = ['Home', 'Features', 'Dashboard', 'Workflow', 'Contact'];
+  const navLinks = ['Home', 'Features', 'About', 'Pricing', 'Contact'];
 
   return (
     <motion.nav
@@ -24,13 +24,16 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'h-16 bg-white/70 backdrop-blur-lg shadow-md'
+          ? 'h-16 bg-black/80 backdrop-blur-lg border-b border-gray-800'
           : 'h-20 bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <div className="text-2xl font-semibold tracking-wide text-slate-900">
-          StockMaster
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">S</span>
+          </div>
+          <span className="text-xl font-semibold text-white">StockMaster</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
@@ -38,7 +41,7 @@ export default function Navbar() {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className="text-slate-600 hover:text-indigo-600 transition-colors duration-200 font-medium"
+              className="text-gray-300 hover:text-orange-500 transition-colors duration-200 font-medium"
             >
               {link}
             </a>
@@ -48,20 +51,20 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             to="/login"
-            className="px-5 py-2 text-slate-700 border border-slate-300 rounded-full hover:border-indigo-600 hover:text-indigo-600 transition-all duration-200"
+            className="px-5 py-2 text-gray-300 border border-gray-600 rounded-lg hover:border-orange-500 hover:text-orange-500 transition-all duration-200"
           >
             Login
           </Link>
           <Link
             to="/signup"
-            className="px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-200"
+            className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200"
           >
-            Sign Up
+            Get Started
           </Link>
         </div>
 
         <button
-          className="md:hidden text-slate-700"
+          className="md:hidden text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -73,14 +76,14 @@ export default function Navbar() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-200"
+          className="md:hidden bg-black/95 backdrop-blur-lg border-t border-gray-800"
         >
           <div className="px-6 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
-                className="text-slate-600 hover:text-indigo-600 transition-colors duration-200 font-medium"
+                className="text-gray-300 hover:text-orange-500 transition-colors duration-200 font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link}
@@ -88,17 +91,17 @@ export default function Navbar() {
             ))}
             <Link
               to="/login"
-              className="px-5 py-2 text-slate-700 border border-slate-300 rounded-full hover:border-indigo-600 hover:text-indigo-600 transition-all duration-200 text-center"
+              className="px-5 py-2 text-gray-300 border border-gray-600 rounded-lg hover:border-orange-500 hover:text-orange-500 transition-all duration-200 text-center"
               onClick={() => setMobileMenuOpen(false)}
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className="px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all duration-200 text-center"
+              className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200 text-center"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Sign Up
+              Get Started
             </Link>
           </div>
         </motion.div>

@@ -2,53 +2,55 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-const faqs = [
-  {
-    question: 'How does StockMaster integrate with my existing systems?',
-    answer: 'StockMaster offers seamless integration with major ERP, WMS, and logistics platforms through our REST API and pre-built connectors. You can connect systems like SAP, Oracle, Shopify, and more in minutes, ensuring real-time data synchronization across your entire supply chain.',
-  },
-  {
-    question: 'What kind of support do you offer during setup?',
-    answer: 'We provide dedicated onboarding support with a dedicated account manager, comprehensive documentation, video tutorials, and live training sessions. Our team is available 24/7 to help you get up and running quickly.',
-  },
-  {
-    question: 'Can I track inventory across multiple warehouses?',
-    answer: 'Yes, StockMaster supports unlimited warehouses and locations. You can track inventory levels, movements, transfers, and adjustments across all your warehouses in real-time from a single dashboard.',
-  },
-  {
-    question: 'How does predictive analytics work?',
-    answer: 'Our AI-powered analytics engine analyzes historical data, seasonal patterns, market trends, and current inventory levels to predict demand, identify potential stockouts, and recommend optimal reorder points. This helps you maintain optimal inventory levels while reducing costs.',
-  },
-  {
-    question: 'Is my data secure?',
-    answer: 'Absolutely. We use enterprise-grade security with end-to-end encryption, regular security audits, SOC 2 compliance, and GDPR compliance. Your data is stored in secure, redundant cloud infrastructure with regular backups.',
-  },
-];
-
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const faqs = [
+    {
+      question: "How does StockMaster track inventory movements?",
+      answer: "StockMaster automatically tracks all inventory movements through receipts, deliveries, transfers, and adjustments. Every transaction is logged in the stock ledger with timestamps, user information, and complete traceability for audit purposes."
+    },
+    {
+      question: "Can I manage multiple warehouses with StockMaster?",
+      answer: "Yes! StockMaster supports multi-warehouse operations. You can track stock levels per location, transfer items between warehouses, and get consolidated reports across all your facilities."
+    },
+    {
+      question: "What happens when I receive goods from suppliers?",
+      answer: "When you create a receipt in StockMaster, you add the supplier details and products received. Once validated, the system automatically increases your stock levels and creates a complete record of the transaction."
+    },
+    {
+      question: "How do I handle stock discrepancies?",
+      answer: "StockMaster includes a stock adjustment feature that lets you reconcile physical counts with recorded stock. Simply enter the actual counted quantity, and the system will automatically adjust your inventory and log the discrepancy."
+    },
+    {
+      question: "Does StockMaster provide alerts for low stock?",
+      answer: "Yes! StockMaster monitors your inventory levels and sends alerts when items fall below your defined thresholds. You can set custom reorder points for each product to ensure you never run out of critical items."
+    }
+  ];
 
   return (
-    <section className="py-24 bg-[#1A1A1A]">
+    <section className="py-24 bg-black">
       <div className="max-w-4xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-            Got Questions? We've Got Answers.
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            From setup to advanced features, explore everything you need to know to get the most out of your supply chain solution.
-          </p>
-        </motion.div>
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+          >
+            Got Questions?
+            <br />
+            <span className="text-orange-500">We've Got Answers</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-xl text-gray-300"
+          >
+            Find answers to common questions about StockMaster inventory management.
+          </motion.p>
+        </div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
@@ -56,23 +58,23 @@ export default function FAQ() {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-[#252525] border border-gray-800 rounded-xl overflow-hidden"
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden"
             >
               <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-[#2A2A2A] transition-colors duration-200"
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-800/50 transition-colors duration-200"
               >
-                <span className="text-white font-semibold text-lg pr-8">
+                <span className="text-lg font-semibold text-white pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`text-white w-5 h-5 flex-shrink-0 transition-transform duration-300 ${
+                  className={`w-5 h-5 text-orange-500 transition-transform duration-200 flex-shrink-0 ${
                     openIndex === index ? 'rotate-180' : ''
                   }`}
                 />
               </button>
+              
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
@@ -82,8 +84,8 @@ export default function FAQ() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-5 pt-0">
-                      <p className="text-gray-400 leading-relaxed">
+                    <div className="px-6 pb-6">
+                      <p className="text-gray-300 leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
@@ -93,8 +95,24 @@ export default function FAQ() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <p className="text-gray-400 mb-4">
+            Still have questions? We're here to help.
+          </p>
+          <a
+            href="mailto:support@stockmaster.com"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-300 font-semibold"
+          >
+            Contact Support
+          </a>
+        </motion.div>
       </div>
     </section>
   );
 }
-

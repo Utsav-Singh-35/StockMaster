@@ -25,6 +25,11 @@ export default function Receipts() {
     expectedDate: '',
     lines: [] as { productId: string; quantity: string; unit: string }[]
   });
+  const [newLineItem, setNewLineItem] = useState({
+    productId: '',
+    quantity: '',
+    unit: 'pcs'
+  });
   const [createError, setCreateError] = useState('');
   const [createLoading, setCreateLoading] = useState(false);
 
@@ -95,12 +100,32 @@ export default function Receipts() {
 
   const getStatusColor = (status: string) => {
     const colors = {
-      Draft: 'bg-gray-100 text-gray-700',
-      Waiting: 'bg-yellow-100 text-yellow-700',
-      Validated: 'bg-green-100 text-green-700',
+      Draft: 'bg-gray-800 text-gray-300',
+      Waiting: 'bg-yellow-900/50 text-yellow-300',
+      Validated: 'bg-green-900/50 text-green-300',
     };
     return colors[status as keyof typeof colors];
   };
+
+  const addLineItem = () => {
+    if (newLineItem.productId && newLineItem.quantity) {
+      setCreateFormData({
+        ...createFormData,
+        lines: [...createFormData.lines, { ...newLineItem }]
+      });
+      setNewLineItem({ productId: '', quantity: '', unit: 'pcs' });
+    }
+  };
+
+  const removeLineItem = (index: number) => {
+    setCreateFormData({
+      ...createFormData,
+      lines: createFormData.lines.filter((_, i) => i !== index)
+    });
+  };
+
+  const products = ['Steel Rods', 'Aluminum Sheets', 'Copper Wire', 'Plastic Components', 'Electronic Parts'];
+  const warehouses = ['Main Warehouse', 'Warehouse A', 'Warehouse B', 'Storage Room'];
 
   const filteredReceipts = receipts.filter(
     r => filterStatus === 'All' || r.status === filterStatus
@@ -112,12 +137,12 @@ export default function Receipts() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Receipts (Incoming Stock)</h1>
-            <p className="text-slate-600 mt-1">Manage incoming goods from suppliers</p>
+            <h1 className="text-3xl font-bold text-white">Receipts (Incoming Stock)</h1>
+            <p className="text-gray-400 mt-1">Manage incoming goods from suppliers</p>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 shadow-lg transition-all"
+            className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all"
           >
             <Plus size={20} />
             Create Receipt
@@ -126,56 +151,56 @@ export default function Receipts() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Total Receipts</p>
-                <p className="text-3xl font-bold text-slate-900 mt-1">{receipts.length}</p>
+                <p className="text-sm text-gray-400">Total Receipts</p>
+                <p className="text-3xl font-bold text-white mt-1">{receipts.length}</p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <TruckIcon className="text-green-600" size={24} />
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <TruckIcon className="text-green-500" size={24} />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Pending Validation</p>
-                <p className="text-3xl font-bold text-yellow-600 mt-1">
+                <p className="text-sm text-gray-400">Pending Validation</p>
+                <p className="text-3xl font-bold text-yellow-500 mt-1">
                   {receipts.filter(r => r.status === 'Waiting').length}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <Calendar className="text-yellow-600" size={24} />
+              <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                <Calendar className="text-yellow-500" size={24} />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-600">Validated Today</p>
-                <p className="text-3xl font-bold text-green-600 mt-1">
+                <p className="text-sm text-gray-400">Validated Today</p>
+                <p className="text-3xl font-bold text-green-500 mt-1">
                   {receipts.filter(r => r.status === 'Validated').length}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Package className="text-green-600" size={24} />
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <Package className="text-green-500" size={24} />
               </div>
             </div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search receipts..."
-                className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
+                className="w-full pl-12 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-green-500 text-white placeholder-gray-400"
               />
             </div>
             <div className="flex gap-2">
@@ -185,8 +210,8 @@ export default function Receipts() {
                   onClick={() => setFilterStatus(status)}
                   className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     filterStatus === status
-                      ? 'bg-green-600 text-white'
-                      : 'border border-slate-200 hover:bg-slate-50'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                   }`}
                 >
                   {status}
@@ -198,34 +223,34 @@ export default function Receipts() {
 
         {/* Receipts Table */}
         {loading ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <div className="text-lg text-slate-600">Loading receipts...</div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
+            <div className="text-lg text-gray-300">Loading receipts...</div>
           </div>
         ) : (
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-50">
+              <thead className="bg-gray-800">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Receipt ID</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Supplier</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Products</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Warehouse</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Date</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Receipt ID</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Supplier</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Products</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Warehouse</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-gray-800">
                 {filteredReceipts.map((receipt) => (
-                  <tr key={receipt.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-4 text-sm font-medium text-slate-900">{receipt.id}</td>
-                    <td className="px-6 py-4 text-sm text-slate-700">{receipt.supplier}</td>
-                    <td className="px-6 py-4 text-sm text-slate-700">
+                  <tr key={receipt.id} className="hover:bg-gray-800/50 transition-colors">
+                    <td className="px-6 py-4 text-sm font-medium text-white">{receipt.id}</td>
+                    <td className="px-6 py-4 text-sm text-gray-300">{receipt.supplier}</td>
+                    <td className="px-6 py-4 text-sm text-gray-300">
                       {receipt.products.length} item(s)
                     </td>
-                    <td className="px-6 py-4 text-sm text-slate-700">{receipt.warehouse}</td>
-                    <td className="px-6 py-4 text-sm text-slate-700">{receipt.date}</td>
+                    <td className="px-6 py-4 text-sm text-gray-300">{receipt.warehouse}</td>
+                    <td className="px-6 py-4 text-sm text-gray-300">{receipt.date}</td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(receipt.status)}`}>
                         {receipt.status}
@@ -235,14 +260,14 @@ export default function Receipts() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => setSelectedReceipt(receipt)}
-                          className="text-green-600 hover:text-green-700 text-sm font-medium"
+                          className="text-green-500 hover:text-green-400 text-sm font-medium"
                         >
                           View
                         </button>
                         {receipt.status === 'Waiting' && (
                           <button 
                             onClick={() => handleValidateReceipt(receipt.id)}
-                            className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                            className="text-orange-500 hover:text-orange-400 text-sm font-medium"
                           >
                             Validate
                           </button>
@@ -270,78 +295,115 @@ export default function Receipts() {
               <motion.div
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
-                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-slate-900">Create New Receipt</h2>
-                  <button onClick={() => setShowCreateModal(false)} className="p-2 hover:bg-slate-100 rounded-lg">
-                    <X size={24} />
+                  <h2 className="text-2xl font-bold text-white">Create New Receipt</h2>
+                  <button onClick={() => setShowCreateModal(false)} className="p-2 hover:bg-gray-800 rounded-lg">
+                    <X size={24} className="text-gray-400" />
                   </button>
                 </div>
 
                 {createError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                  <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-xl mb-6">
                     {createError}
                   </div>
                 )}
 
                 <form onSubmit={handleCreateReceipt} className="space-y-6">
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Supplier Name</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Supplier Name</label>
                     <input
                       type="text"
                       placeholder="Enter supplier name"
                       value={createFormData.supplierName}
                       onChange={(e) => setCreateFormData({ ...createFormData, supplierName: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-green-500 text-white placeholder-gray-400"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Warehouse</label>
-                    <input
-                      type="text"
-                      placeholder="Enter warehouse ID"
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Warehouse</label>
+                    <select
                       value={createFormData.warehouseId}
                       onChange={(e) => setCreateFormData({ ...createFormData, warehouseId: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
-                    />
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-green-500 text-white"
+                    >
+                      <option value="">Select Warehouse</option>
+                      {warehouses.map(warehouse => (
+                        <option key={warehouse} value={warehouse}>{warehouse}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Expected Date</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Expected Date</label>
                     <input
                       type="date"
                       value={createFormData.expectedDate}
                       onChange={(e) => setCreateFormData({ ...createFormData, expectedDate: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-green-500 text-white"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Products</label>
-                    <div className="space-y-3">
-                      <div className="flex gap-3">
-                        <select className="flex-1 px-4 py-3 border border-slate-200 rounded-xl">
-                          <option>Select Product</option>
-                          <option>Steel Rods</option>
-                          <option>Bolts M8</option>
-                          <option>Packaging Boxes</option>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Products</label>
+                    
+                    {/* Add Product Form */}
+                    <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-4">
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        <select
+                          value={newLineItem.productId}
+                          onChange={(e) => setNewLineItem({ ...newLineItem, productId: e.target.value })}
+                          className="md:col-span-2 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-green-500 text-white text-sm"
+                        >
+                          <option value="">Select Product</option>
+                          {products.map(product => (
+                            <option key={product} value={product}>{product}</option>
+                          ))}
                         </select>
                         <input
                           type="number"
-                          placeholder="Qty"
-                          className="w-24 px-4 py-3 border border-slate-200 rounded-xl"
+                          placeholder="Quantity"
+                          value={newLineItem.quantity}
+                          onChange={(e) => setNewLineItem({ ...newLineItem, quantity: e.target.value })}
+                          className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-green-500 text-white text-sm placeholder-gray-400"
                         />
-                        <button type="button" className="px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700">
-                          Add
+                        <button 
+                          type="button" 
+                          onClick={addLineItem}
+                          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-medium"
+                        >
+                          Add Product
                         </button>
                       </div>
                     </div>
+
+                    {/* Product List */}
+                    {createFormData.lines.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-medium text-gray-300">Added Products:</h4>
+                        {createFormData.lines.map((line, index) => (
+                          <div key={index} className="flex items-center justify-between bg-gray-800 border border-gray-700 rounded-lg p-3">
+                            <div className="flex-1">
+                              <span className="text-white font-medium">{line.productId}</span>
+                              <span className="text-gray-400 ml-2">× {line.quantity} {line.unit}</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeLineItem(index)}
+                              className="text-red-400 hover:text-red-300 p-1"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex gap-3 pt-4">
@@ -349,14 +411,14 @@ export default function Receipts() {
                       type="button"
                       onClick={() => setShowCreateModal(false)}
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 disabled:opacity-50 transition-colors"
                     >
                       Cancel
                     </button>
                     <button 
                       type="submit" 
-                      disabled={createLoading}
-                      className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={createLoading || createFormData.lines.length === 0}
+                      className="flex-1 px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {createLoading ? 'Creating...' : 'Create Receipt'}
                     </button>
