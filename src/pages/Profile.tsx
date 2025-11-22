@@ -96,37 +96,37 @@ export default function Profile() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">My Profile</h1>
-          <p className="text-slate-600 mt-1">Manage your account information</p>
+          <h1 className="text-3xl font-bold text-white">My Profile</h1>
+          <p className="text-gray-400 mt-1">Manage your account information</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+          <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-xl">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl">
+          <div className="bg-green-900/50 border border-green-700 text-green-300 px-4 py-3 rounded-xl">
             {success}
           </div>
         )}
 
-        <div className="bg-white rounded-xl p-8 shadow-lg">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-8">
           <div className="flex items-center gap-6 mb-8">
-            <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center">
-              <User size={48} className="text-indigo-600" />
+            <div className="w-24 h-24 bg-orange-500/20 rounded-full flex items-center justify-center">
+              <User size={48} className="text-orange-500" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">{userData.fullName}</h2>
-              <p className="text-slate-600">{userData.role}</p>
+              <h2 className="text-2xl font-bold text-white">{userData.fullName}</h2>
+              <p className="text-gray-400">{userData.role}</p>
             </div>
           </div>
 
           <form onSubmit={handleSaveChanges}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
                   <Mail size={16} />
                   Email
                 </label>
@@ -134,12 +134,12 @@ export default function Profile() {
                   type="email"
                   value={userData.email}
                   disabled
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl bg-slate-50"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
                   <Building size={16} />
                   Department
                 </label>
@@ -147,12 +147,12 @@ export default function Profile() {
                   type="text"
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
                   <User size={16} />
                   Role
                 </label>
@@ -160,12 +160,12 @@ export default function Profile() {
                   type="text"
                   value={userData.role}
                   disabled
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl bg-slate-50"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
                   <Calendar size={16} />
                   Member Since
                 </label>
@@ -173,46 +173,46 @@ export default function Profile() {
                   type="text"
                   value={formatDate(userData.createdAt)}
                   disabled
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl bg-slate-50"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-400"
                 />
               </div>
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button type="submit" className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium">
+              <button type="submit" className="px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium transition-colors">
                 Save Changes
               </button>
-              <button type="button" onClick={() => setDepartment(userData.department || '')} className="px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 font-medium">
+              <button type="button" onClick={() => setDepartment(userData.department || '')} className="px-6 py-3 bg-gray-800 border border-gray-700 rounded-xl hover:bg-gray-700 font-medium text-gray-300 transition-colors">
                 Cancel
               </button>
             </div>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-200">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">Change Password</h3>
+          <div className="mt-8 pt-6 border-t border-gray-700">
+            <h3 className="text-lg font-bold text-white mb-4">Change Password</h3>
             <form onSubmit={handlePasswordChange} className="space-y-4">
               <input
                 type="password"
                 placeholder="Current Password"
                 value={passwordData.currentPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
               />
               <input
                 type="password"
                 placeholder="New Password"
                 value={passwordData.newPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
               />
               <input
                 type="password"
                 placeholder="Confirm New Password"
                 value={passwordData.confirmPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
               />
-              <button type="submit" className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium">
+              <button type="submit" className="px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium transition-colors">
                 Update Password
               </button>
             </form>

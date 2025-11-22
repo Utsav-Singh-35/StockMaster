@@ -569,64 +569,64 @@ export default function ProductsDashboard() {
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ type: 'spring', damping: 25 }}
-                className="bg-white h-full w-full md:w-[600px] overflow-y-auto"
+                className="bg-gray-900 border-l border-gray-800 h-full w-full md:w-[600px] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-6 space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-slate-900">Product Details</h2>
+                    <h2 className="text-2xl font-bold text-white">Product Details</h2>
                     <button
                       onClick={() => setSelectedProduct(null)}
-                      className="p-2 hover:bg-slate-100 rounded-lg"
+                      className="p-2 hover:bg-gray-800 rounded-lg"
                     >
-                      <X size={24} />
+                      <X size={24} className="text-gray-400" />
                     </button>
                   </div>
 
                   <div className="space-y-6">
-                    <div className="bg-slate-50 rounded-xl p-6">
-                      <h3 className="font-semibold text-slate-900 mb-4">Product Information</h3>
+                    <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                      <h3 className="font-semibold text-white mb-4">Product Information</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="text-sm text-slate-600">Product Name</label>
-                          <p className="font-medium text-slate-900">{selectedProduct.name}</p>
+                          <label className="text-sm text-gray-400">Product Name</label>
+                          <p className="font-medium text-white">{selectedProduct.name}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-slate-600">SKU / Code</label>
-                          <p className="font-medium text-slate-900">{selectedProduct.sku}</p>
+                          <label className="text-sm text-gray-400">SKU / Code</label>
+                          <p className="font-medium text-white">{selectedProduct.sku}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-slate-600">Category</label>
-                          <p className="font-medium text-slate-900">{selectedProduct.category}</p>
+                          <label className="text-sm text-gray-400">Category</label>
+                          <p className="font-medium text-white">{selectedProduct.category}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-slate-600">Unit of Measure</label>
-                          <p className="font-medium text-slate-900">{selectedProduct.unit}</p>
+                          <label className="text-sm text-gray-400">Unit of Measure</label>
+                          <p className="font-medium text-white">{selectedProduct.unit}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-slate-600">Last Updated</label>
-                          <p className="font-medium text-slate-900">{selectedProduct.lastUpdated}</p>
+                          <label className="text-sm text-gray-400">Last Updated</label>
+                          <p className="font-medium text-white">{selectedProduct.lastUpdated}</p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-xl p-6">
-                      <h3 className="font-semibold text-slate-900 mb-4">Stock Data</h3>
+                    <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                      <h3 className="font-semibold text-white mb-4">Stock Data</h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-slate-600">Total Stock</span>
-                          <span className="text-2xl font-bold text-slate-900">
+                          <span className="text-gray-400">Total Stock</span>
+                          <span className="text-2xl font-bold text-white">
                             {selectedProduct.totalStock} {selectedProduct.unit}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-slate-600">Reorder Point</span>
-                          <span className="font-medium text-slate-900">
+                          <span className="text-gray-400">Reorder Point</span>
+                          <span className="font-medium text-white">
                             {selectedProduct.reorderLevel} {selectedProduct.unit}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-slate-600">Status</span>
+                          <span className="text-gray-400">Status</span>
                           <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(selectedProduct.status)}`}>
                             {selectedProduct.status}
                           </span>
@@ -634,13 +634,13 @@ export default function ProductsDashboard() {
                       </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-xl p-6">
-                      <h3 className="font-semibold text-slate-900 mb-4">Stock by Warehouse</h3>
+                    <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                      <h3 className="font-semibold text-white mb-4">Stock by Warehouse</h3>
                       <div className="space-y-3">
                         {selectedProduct.locations.map((loc, idx) => (
-                          <div key={idx} className="flex justify-between items-center p-3 bg-white rounded-lg">
-                            <span className="text-slate-700">{loc.warehouse}</span>
-                            <span className="font-bold text-slate-900">
+                          <div key={idx} className="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
+                            <span className="text-gray-300">{loc.warehouse}</span>
+                            <span className="font-bold text-white">
                               {loc.quantity} {selectedProduct.unit}
                             </span>
                           </div>
@@ -653,13 +653,13 @@ export default function ProductsDashboard() {
                     <div className="flex gap-3">
                       <button 
                         onClick={() => handleEditProduct(selectedProduct)}
-                        className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium"
+                        className="flex-1 px-4 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium transition-colors"
                       >
                         Edit Product
                       </button>
                       <button 
                         onClick={() => handleDeleteProduct(selectedProduct.id)}
-                        className="px-4 py-3 border border-red-200 text-red-600 rounded-xl hover:bg-red-50 font-medium"
+                        className="px-4 py-3 border border-red-700 text-red-400 rounded-xl hover:bg-red-900/50 font-medium transition-colors"
                       >
                         <Trash2 size={20} />
                       </button>
@@ -707,37 +707,37 @@ export default function ProductsDashboard() {
                 <form onSubmit={handleCreateProduct} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Product Name</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Product Name</label>
                       <input
                         type="text"
                         placeholder="Enter product name"
                         value={createFormData.name}
                         onChange={(e) => setCreateFormData({ ...createFormData, name: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">SKU / Product Code</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">SKU / Product Code</label>
                       <input
                         type="text"
                         placeholder="e.g., SR-2024-001"
                         value={createFormData.sku}
                         onChange={(e) => setCreateFormData({ ...createFormData, sku: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Category</label>
                       <select 
                         value={createFormData.category}
                         onChange={(e) => setCreateFormData({ ...createFormData, category: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select category</option>
                         {categories.filter(c => c !== 'All').map(cat => (
@@ -750,12 +750,12 @@ export default function ProductsDashboard() {
                       </select>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Unit of Measure</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Unit of Measure</label>
                       <select 
                         value={createFormData.unit}
                         onChange={(e) => setCreateFormData({ ...createFormData, unit: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select unit</option>
                         <option value="units">units</option>
@@ -769,7 +769,7 @@ export default function ProductsDashboard() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Reorder Level</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Reorder Level</label>
                       <input
                         type="number"
                         placeholder="0"
@@ -777,19 +777,19 @@ export default function ProductsDashboard() {
                         onChange={(e) => setCreateFormData({ ...createFormData, reorderLevel: e.target.value })}
                         required
                         min="0"
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Description (Optional)</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Description (Optional)</label>
                     <textarea
                       rows={4}
                       placeholder="Enter product description"
                       value={createFormData.description}
                       onChange={(e) => setCreateFormData({ ...createFormData, description: e.target.value })}
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400 resize-none"
                     ></textarea>
                   </div>
 
@@ -798,14 +798,14 @@ export default function ProductsDashboard() {
                       type="button"
                       onClick={() => setShowCreateModal(false)}
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 font-medium disabled:opacity-50 transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {createLoading ? 'Creating...' : 'Create Product'}
                     </button>
@@ -830,40 +830,40 @@ export default function ProductsDashboard() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-slate-900">Edit Product</h2>
+                  <h2 className="text-2xl font-bold text-white">Edit Product</h2>
                   <button
                     onClick={() => setShowEditModal(false)}
-                    className="p-2 hover:bg-slate-100 rounded-lg"
+                    className="p-2 hover:bg-gray-800 rounded-lg"
                   >
-                    <X size={24} />
+                    <X size={24} className="text-gray-400" />
                   </button>
                 </div>
 
                 {editError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4">
+                  <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-xl mb-4">
                     {editError}
                   </div>
                 )}
 
                 {/* Stock Information */}
                 {selectedProduct && selectedProduct.locations && selectedProduct.locations.length > 0 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-                    <h3 className="font-semibold text-slate-900 mb-3">Current Stock by Location</h3>
+                  <div className="bg-blue-900/30 border border-blue-700/50 rounded-xl p-4 mb-6">
+                    <h3 className="font-semibold text-white mb-3">Current Stock by Location</h3>
                     <div className="grid grid-cols-2 gap-3">
                       {selectedProduct.locations.map((loc: any, idx: number) => (
-                        <div key={idx} className="bg-white rounded-lg p-3 border border-slate-200">
-                          <p className="text-sm text-slate-600">{loc.warehouse}</p>
-                          <p className="text-lg font-bold text-slate-900">
+                        <div key={idx} className="bg-gray-800 rounded-lg p-3 border border-gray-700">
+                          <p className="text-sm text-gray-400">{loc.warehouse}</p>
+                          <p className="text-lg font-bold text-white">
                             {loc.quantity} {selectedProduct.unit}
                           </p>
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-slate-600 mt-3">
+                    <p className="text-xs text-gray-400 mt-3">
                       💡 To adjust stock quantities, use the <strong>Stock Adjustments</strong> page
                     </p>
                   </div>
@@ -871,25 +871,25 @@ export default function ProductsDashboard() {
 
                 <form onSubmit={handleUpdateProduct} className="space-y-6">
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Product Name</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Product Name</label>
                     <input
                       type="text"
                       placeholder="Enter product name"
                       value={editFormData.name}
                       onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
                       required
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Category</label>
                       <select 
                         value={editFormData.category}
                         onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select category</option>
                         {categories.filter(c => c !== 'All').map(cat => (
@@ -902,12 +902,12 @@ export default function ProductsDashboard() {
                       </select>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Unit of Measure</label>
+                      <label className="text-sm font-medium text-gray-300 mb-2 block">Unit of Measure</label>
                       <select 
                         value={editFormData.unit}
                         onChange={(e) => setEditFormData({ ...editFormData, unit: e.target.value })}
                         required
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white"
                       >
                         <option value="">Select unit</option>
                         <option value="units">units</option>
@@ -920,7 +920,7 @@ export default function ProductsDashboard() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Reorder Level</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Reorder Level</label>
                     <input
                       type="number"
                       placeholder="0"
@@ -928,18 +928,18 @@ export default function ProductsDashboard() {
                       onChange={(e) => setEditFormData({ ...editFormData, reorderLevel: e.target.value })}
                       required
                       min="0"
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">Description (Optional)</label>
+                    <label className="text-sm font-medium text-gray-300 mb-2 block">Description (Optional)</label>
                     <textarea
                       rows={4}
                       placeholder="Enter product description"
                       value={editFormData.description}
                       onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:outline-none focus:border-orange-500 text-white placeholder-gray-400 resize-none"
                     ></textarea>
                   </div>
 
@@ -948,14 +948,14 @@ export default function ProductsDashboard() {
                       type="button"
                       onClick={() => setShowEditModal(false)}
                       disabled={editLoading}
-                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 font-medium disabled:opacity-50 transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={editLoading}
-                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {editLoading ? 'Updating...' : 'Update Product'}
                     </button>
