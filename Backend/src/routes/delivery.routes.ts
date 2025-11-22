@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma';
 import { authenticate, AuthRequest } from '../middleware/auth.middleware';
+import { getISTDate } from '../lib/timezone';
 
 const router = Router();
 router.use(authenticate);
@@ -179,7 +180,7 @@ router.post('/:id/ship', async (req, res) => {
         where: { id: stock.id },
         data: {
           quantity: quantityAfter,
-          lastUpdated: new Date()
+          lastUpdated: getISTDate()
         }
       });
 
@@ -203,7 +204,7 @@ router.post('/:id/ship', async (req, res) => {
       where: { id: delivery.id },
       data: {
         status: 'SHIPPED',
-        shippedAt: new Date()
+        shippedAt: getISTDate()
       },
       include: {
         lines: { include: { product: true } },

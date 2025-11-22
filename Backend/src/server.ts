@@ -13,6 +13,9 @@ import stockRoutes from './routes/stock.routes';
 
 dotenv.config();
 
+// Set timezone to IST
+process.env.TZ = 'Asia/Kolkata';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

@@ -26,6 +26,7 @@ export default function Deliveries() {
   });
   const [createError, setCreateError] = useState('');
   const [createLoading, setCreateLoading] = useState(false);
+  const [selectedDelivery, setSelectedDelivery] = useState<Delivery | null>(null);
 
   useEffect(() => {
     fetchDeliveries();
@@ -230,7 +231,10 @@ export default function Deliveries() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
+                      <button 
+                        onClick={() => setSelectedDelivery(delivery)}
+                        className="text-purple-600 hover:text-purple-700 text-sm font-medium"
+                      >
                         View
                       </button>
                     </td>

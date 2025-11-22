@@ -427,7 +427,13 @@ export default function Receipts() {
                   </div>
 
                   {selectedReceipt.status === 'Waiting' && (
-                    <button className="w-full px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 font-medium">
+                    <button 
+                      onClick={async () => {
+                        await handleValidateReceipt(selectedReceipt.id);
+                        setSelectedReceipt(null);
+                      }}
+                      className="w-full px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 font-medium"
+                    >
                       Validate Receipt (Stock +)
                     </button>
                   )}

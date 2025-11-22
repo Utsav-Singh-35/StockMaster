@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma';
 import { authenticate, AuthRequest } from '../middleware/auth.middleware';
+import { getISTDate } from '../lib/timezone';
 
 const router = Router();
 router.use(authenticate);
@@ -147,7 +148,7 @@ router.post('/:id/complete', async (req, res) => {
       where: { id: fromStock.id },
       data: {
         quantity: fromQuantityAfter,
-        lastUpdated: new Date()
+        lastUpdated: getISTDate()
       }
     });
 
@@ -188,13 +189,13 @@ router.post('/:id/complete', async (req, res) => {
       },
       update: {
         quantity: toQuantityAfter,
-        lastUpdated: new Date()
+        lastUpdated: getISTDate()
       },
       create: {
         productId: transfer.productId,
         warehouseId: transfer.toWarehouseId,
         quantity: toQuantityAfter,
-        lastUpdated: new Date()
+        lastUpdated: getISTDate()
       }
     });
 
@@ -217,7 +218,7 @@ router.post('/:id/complete', async (req, res) => {
       where: { id: transfer.id },
       data: {
         status: 'DONE',
-        completedAt: new Date()
+        completedAt: getISTDate()
       },
       include: {
         product: true,

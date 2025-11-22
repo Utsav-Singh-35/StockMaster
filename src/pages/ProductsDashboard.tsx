@@ -41,6 +41,17 @@ export default function ProductsDashboard() {
   });
   const [createError, setCreateError] = useState('');
   const [createLoading, setCreateLoading] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    id: '',
+    name: '',
+    category: '',
+    unit: '',
+    reorderLevel: '',
+    description: ''
+  });
+  const [editError, setEditError] = useState('');
+  const [editLoading, setEditLoading] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -102,6 +113,64 @@ export default function ProductsDashboard() {
       setCreateError(error.message || 'An error occurred');
     } finally {
       setCreateLoading(false);
+    }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditFormData({
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      unit: product.unit,
+      reorderLevel: product.reorderLevel.toString(),
+      description: ''
+    });
+    setShowEditModal(true);
+    setSelectedProduct(product); // Keep product data for stock display
+  };
+
+  const handleUpdateProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEditError('');
+    setEditLoading(true);
+
+    try {
+      const response = await productsAPI.update(editFormData.id, {
+        name: editFormData.name,
+        category: editFormData.category,
+        unit: editFormData.unit,
+        reorderLevel: parseInt(editFormData.reorderLevel),
+        description: editFormData.description || undefined
+      });
+
+      if (response.success) {
+        setShowEditModal(false);
+        fetchProducts();
+      } else {
+        setEditError(response.error?.message || 'Failed to update product');
+      }
+    } catch (error: any) {
+      setEditError(error.message || 'An error occurred');
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (!confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await productsAPI.delete(productId);
+      if (response.success) {
+        setSelectedProduct(null);
+        fetchProducts();
+      } else {
+        alert(response.error?.message || 'Failed to delete product');
+      }
+    } catch (error: any) {
+      alert(error.message || 'An error occurred');
     }
   };
 
@@ -395,7 +464,13 @@ export default function ProductsDashboard() {
                             >
                               View
                             </button>
-                            <button className="text-slate-400 hover:text-slate-600">
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditProduct(product);
+                              }}
+                              className="text-slate-400 hover:text-slate-600"
+                            >
                               <Edit size={16} />
                             </button>
                           </div>
@@ -445,7 +520,13 @@ export default function ProductsDashboard() {
                       <p className="text-sm text-slate-600">{product.sku}</p>
                     </div>
                   </div>
-                  <button className="text-slate-400 hover:text-slate-600">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditProduct(product);
+                    }}
+                    className="text-slate-400 hover:text-slate-600"
+                  >
                     <Edit size={16} />
                   </button>
                 </div>
@@ -570,10 +651,16 @@ export default function ProductsDashboard() {
 
 
                     <div className="flex gap-3">
-                      <button className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium">
+                      <button 
+                        onClick={() => handleEditProduct(selectedProduct)}
+                        className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium"
+                      >
                         Edit Product
                       </button>
-                      <button className="px-4 py-3 border border-red-200 text-red-600 rounded-xl hover:bg-red-50 font-medium">
+                      <button 
+                        onClick={() => handleDeleteProduct(selectedProduct.id)}
+                        className="px-4 py-3 border border-red-200 text-red-600 rounded-xl hover:bg-red-50 font-medium"
+                      >
                         <Trash2 size={20} />
                       </button>
                     </div>
@@ -721,6 +808,156 @@ export default function ProductsDashboard() {
                       className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {createLoading ? 'Creating...' : 'Create Product'}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Edit Product Modal */}
+        <AnimatePresence>
+          {showEditModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6"
+              onClick={() => setShowEditModal(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-slate-900">Edit Product</h2>
+                  <button
+                    onClick={() => setShowEditModal(false)}
+                    className="p-2 hover:bg-slate-100 rounded-lg"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+
+                {editError && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4">
+                    {editError}
+                  </div>
+                )}
+
+                {/* Stock Information */}
+                {selectedProduct && selectedProduct.locations && selectedProduct.locations.length > 0 && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                    <h3 className="font-semibold text-slate-900 mb-3">Current Stock by Location</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {selectedProduct.locations.map((loc: any, idx: number) => (
+                        <div key={idx} className="bg-white rounded-lg p-3 border border-slate-200">
+                          <p className="text-sm text-slate-600">{loc.warehouse}</p>
+                          <p className="text-lg font-bold text-slate-900">
+                            {loc.quantity} {selectedProduct.unit}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-slate-600 mt-3">
+                      💡 To adjust stock quantities, use the <strong>Stock Adjustments</strong> page
+                    </p>
+                  </div>
+                )}
+
+                <form onSubmit={handleUpdateProduct} className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 mb-2 block">Product Name</label>
+                    <input
+                      type="text"
+                      placeholder="Enter product name"
+                      value={editFormData.name}
+                      onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
+                      <select 
+                        value={editFormData.category}
+                        onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      >
+                        <option value="">Select category</option>
+                        {categories.filter(c => c !== 'All').map(cat => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                        <option value="Electronics">Electronics</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Raw Materials">Raw Materials</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Unit of Measure</label>
+                      <select 
+                        value={editFormData.unit}
+                        onChange={(e) => setEditFormData({ ...editFormData, unit: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      >
+                        <option value="">Select unit</option>
+                        <option value="units">units</option>
+                        <option value="kg">kg</option>
+                        <option value="liters">liters</option>
+                        <option value="boxes">boxes</option>
+                        <option value="meters">meters</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 mb-2 block">Reorder Level</label>
+                    <input
+                      type="number"
+                      placeholder="0"
+                      value={editFormData.reorderLevel}
+                      onChange={(e) => setEditFormData({ ...editFormData, reorderLevel: e.target.value })}
+                      required
+                      min="0"
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 mb-2 block">Description (Optional)</label>
+                    <textarea
+                      rows={4}
+                      placeholder="Enter product description"
+                      value={editFormData.description}
+                      onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowEditModal(false)}
+                      disabled={editLoading}
+                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={editLoading}
+                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {editLoading ? 'Updating...' : 'Update Product'}
                     </button>
                   </div>
                 </form>

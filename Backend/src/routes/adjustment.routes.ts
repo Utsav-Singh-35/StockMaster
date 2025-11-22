@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma';
 import { authenticate, AuthRequest } from '../middleware/auth.middleware';
+import { getISTDate } from '../lib/timezone';
 
 const router = Router();
 router.use(authenticate);
@@ -92,13 +93,13 @@ router.post('/', async (req: AuthRequest, res) => {
       },
       update: {
         quantity: quantityAfter,
-        lastUpdated: new Date()
+        lastUpdated: getISTDate()
       },
       create: {
         productId,
         warehouseId,
         quantity: quantityAfter,
-        lastUpdated: new Date()
+        lastUpdated: getISTDate()
       }
     });
 

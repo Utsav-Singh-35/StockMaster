@@ -6,6 +6,7 @@ import { transfersAPI } from '../lib/api';
 export default function Transfers() {
   const [transfers, setTransfers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     fetchTransfers();
@@ -33,7 +34,10 @@ export default function Transfers() {
             <h1 className="text-3xl font-bold text-slate-900">Internal Transfers</h1>
             <p className="text-slate-600 mt-1">Move stock between warehouses and locations</p>
           </div>
-          <button className="flex items-center gap-2 px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 shadow-lg">
+          <button 
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 shadow-lg"
+          >
             <Plus size={20} />
             Create Transfer
           </button>

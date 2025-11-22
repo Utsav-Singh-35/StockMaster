@@ -6,6 +6,9 @@ import { warehousesAPI } from '../lib/api';
 export default function Settings() {
   const [warehouses, setWarehouses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedWarehouse, setSelectedWarehouse] = useState<any>(null);
 
   useEffect(() => {
     fetchWarehouses();
@@ -33,7 +36,10 @@ export default function Settings() {
             <h1 className="text-3xl font-bold text-slate-900">Settings</h1>
             <p className="text-slate-600 mt-1">Manage warehouses and system configuration</p>
           </div>
-          <button className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-lg">
+          <button 
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-lg"
+          >
             <Plus size={20} />
             Add Warehouse
           </button>
@@ -72,7 +78,13 @@ export default function Settings() {
                     </span>
                   </div>
                 </div>
-                <button className="w-full mt-4 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-sm font-medium">
+                <button 
+                  onClick={() => {
+                    setSelectedWarehouse(wh);
+                    setShowEditModal(true);
+                  }}
+                  className="w-full mt-4 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-sm font-medium"
+                >
                   Edit Warehouse
                 </button>
               </div>
