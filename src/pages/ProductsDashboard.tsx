@@ -109,9 +109,9 @@ export default function ProductsDashboard() {
 
   const getStatusColor = (status: string) => {
     const colors = {
-      'In Stock': 'bg-green-900/30 text-green-400 border-green-800',
-      'Low Stock': 'bg-yellow-900/30 text-yellow-400 border-yellow-800',
-      'Out of Stock': 'bg-red-900/30 text-red-400 border-red-800',
+      'In Stock': 'bg-green-100 text-green-700 border-green-200',
+      'Low Stock': 'bg-yellow-100 text-yellow-700 border-yellow-200',
+      'Out of Stock': 'bg-red-100 text-red-700 border-red-200',
     };
     return colors[status as keyof typeof colors];
   };
@@ -154,12 +154,12 @@ export default function ProductsDashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-white">Products</h1>
-            <p className="text-gray-400 mt-1">Manage your inventory catalog</p>
+            <h1 className="text-3xl font-bold text-slate-900">Products</h1>
+            <p className="text-slate-600 mt-1">Manage your inventory catalog</p>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-[#FF8C00] text-white rounded-xl hover:bg-[#FF9500] shadow-lg hover:shadow-xl transition-all"
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all"
           >
             <Plus size={20} />
             Create Product
@@ -171,15 +171,15 @@ export default function ProductsDashboard() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg"
+            className="bg-white rounded-xl p-6 shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Total Products</p>
-                <p className="text-3xl font-bold text-white mt-1">{products.length}</p>
+                <p className="text-sm text-slate-600">Total Products</p>
+                <p className="text-3xl font-bold text-slate-900 mt-1">{products.length}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center">
-                <Package className="text-blue-400" size={24} />
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <Package className="text-blue-600" size={24} />
               </div>
             </div>
           </motion.div>
@@ -188,15 +188,15 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg"
+            className="bg-white rounded-xl p-6 shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Low Stock Items</p>
-                <p className="text-3xl font-bold text-red-400 mt-1">{lowStockCount}</p>
+                <p className="text-sm text-slate-600">Low Stock Items</p>
+                <p className="text-3xl font-bold text-red-600 mt-1">{lowStockCount}</p>
               </div>
-              <div className="w-12 h-12 bg-red-900/30 rounded-xl flex items-center justify-center">
-                <AlertTriangle className="text-red-400" size={24} />
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <AlertTriangle className="text-red-600" size={24} />
               </div>
             </div>
           </motion.div>
@@ -205,15 +205,15 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg"
+            className="bg-white rounded-xl p-6 shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Categories</p>
-                <p className="text-3xl font-bold text-white mt-1">{categories.length - 1}</p>
+                <p className="text-sm text-slate-600">Categories</p>
+                <p className="text-3xl font-bold text-slate-900 mt-1">{categories.length - 1}</p>
               </div>
-              <div className="w-12 h-12 bg-purple-900/30 rounded-xl flex items-center justify-center">
-                <Grid className="text-purple-400" size={24} />
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <Grid className="text-purple-600" size={24} />
               </div>
             </div>
           </motion.div>
@@ -222,52 +222,52 @@ export default function ProductsDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg"
+            className="bg-white rounded-xl p-6 shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Total Stock Value</p>
-                <p className="text-3xl font-bold text-green-400 mt-1">
+                <p className="text-sm text-slate-600">Total Stock Value</p>
+                <p className="text-3xl font-bold text-green-600 mt-1">
                   {products.reduce((sum, p) => sum + p.totalStock, 0)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-900/30 rounded-xl flex items-center justify-center">
-                <TrendingUp className="text-green-400" size={24} />
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <TrendingUp className="text-green-600" size={24} />
               </div>
             </div>
           </motion.div>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg space-y-4">
+        <div className="bg-white rounded-xl p-6 shadow-lg space-y-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type="text"
                 placeholder="Search by product name or SKU..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white placeholder-gray-500"
+                className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl hover:bg-[#2A2A2A] flex items-center gap-2 text-gray-300"
+                className="px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 flex items-center gap-2"
               >
                 <Filter size={20} />
                 Filters
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`px-4 py-3 rounded-xl ${viewMode === 'list' ? 'bg-[#FF8C00] text-white' : 'bg-[#1F1F1F] border border-gray-800 hover:bg-[#2A2A2A] text-gray-300'}`}
+                className={`px-4 py-3 rounded-xl ${viewMode === 'list' ? 'bg-indigo-600 text-white' : 'border border-slate-200 hover:bg-slate-50'}`}
               >
                 <List size={20} />
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-4 py-3 rounded-xl ${viewMode === 'grid' ? 'bg-[#FF8C00] text-white' : 'bg-[#1F1F1F] border border-gray-800 hover:bg-[#2A2A2A] text-gray-300'}`}
+                className={`px-4 py-3 rounded-xl ${viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'border border-slate-200 hover:bg-slate-50'}`}
               >
                 <Grid size={20} />
               </button>
@@ -278,10 +278,10 @@ export default function ProductsDashboard() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="space-y-4 pt-4 border-t border-gray-800"
+              className="space-y-4 pt-4 border-t border-slate-200"
             >
               <div>
-                <label className="text-sm font-medium text-gray-300 mb-2 block">Category</label>
+                <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
                 <div className="flex flex-wrap gap-2">
                   {categories.map(cat => (
                     <button
@@ -289,8 +289,8 @@ export default function ProductsDashboard() {
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                         selectedCategory === cat
-                          ? 'bg-[#FF8C00] text-white'
-                          : 'bg-[#1F1F1F] text-gray-300 hover:bg-[#2A2A2A] border border-gray-800'
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
                       {cat}
@@ -300,12 +300,12 @@ export default function ProductsDashboard() {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-300 mb-2 block">Sort By</label>
+                <label className="text-sm font-medium text-slate-700 mb-2 block">Sort By</label>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setSortBy('name')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'name' ? 'bg-[#FF8C00] text-white' : 'bg-[#1F1F1F] text-gray-300 border border-gray-800'
+                      sortBy === 'name' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
                     }`}
                   >
                     A → Z
@@ -313,7 +313,7 @@ export default function ProductsDashboard() {
                   <button
                     onClick={() => setSortBy('stock')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'stock' ? 'bg-[#FF8C00] text-white' : 'bg-[#1F1F1F] text-gray-300 border border-gray-800'
+                      sortBy === 'stock' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
                     }`}
                   >
                     Highest Stock
@@ -321,7 +321,7 @@ export default function ProductsDashboard() {
                   <button
                     onClick={() => setSortBy('lowStock')}
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      sortBy === 'lowStock' ? 'bg-[#FF8C00] text-white' : 'bg-[#1F1F1F] text-gray-300 border border-gray-800'
+                      sortBy === 'lowStock' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
                     }`}
                   >
                     Low Stock First
@@ -334,52 +334,52 @@ export default function ProductsDashboard() {
 
         {/* Products Display */}
         {loading ? (
-          <div className="bg-[#252525] border border-gray-800 rounded-xl shadow-lg p-12 text-center">
-            <div className="text-lg text-gray-400">Loading products...</div>
+          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
+            <div className="text-lg text-slate-600">Loading products...</div>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="bg-[#252525] border border-gray-800 rounded-xl shadow-lg p-12 text-center">
-            <Package className="mx-auto text-gray-500 mb-4" size={48} />
-            <h3 className="text-xl font-semibold text-white mb-2">No products found</h3>
-            <p className="text-gray-400">Try adjusting your search or filters</p>
+          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
+            <Package className="mx-auto text-slate-400 mb-4" size={48} />
+            <h3 className="text-xl font-semibold text-slate-900 mb-2">No products found</h3>
+            <p className="text-slate-600">Try adjusting your search or filters</p>
           </div>
         ) : viewMode === 'list' ? (
-          <div className="bg-[#252525] border border-gray-800 rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#1F1F1F]">
+                <thead className="bg-slate-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Product</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">SKU</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Category</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Total Stock</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Reorder Level</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Status</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Product</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">SKU</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Category</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Total Stock</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Reorder Level</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800">
+                <tbody className="divide-y divide-slate-200">
                   {filteredProducts.map((product) => (
                     <>
-                      <tr key={product.id} className="hover:bg-[#2A2A2A] transition-colors">
+                      <tr key={product.id} className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <button
                               onClick={() => toggleRowExpansion(product.id)}
-                              className="text-gray-500 hover:text-gray-300"
+                              className="text-slate-400 hover:text-slate-600"
                             >
                               {expandedRows.has(product.id) ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                             </button>
                             <div className={`w-3 h-3 rounded-full ${getStockIndicator(product)}`}></div>
-                            <span className="font-medium text-white">{product.name}</span>
+                            <span className="font-medium text-slate-900">{product.name}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-300">{product.sku}</td>
-                        <td className="px-6 py-4 text-sm text-gray-300">{product.category}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-white">
+                        <td className="px-6 py-4 text-sm text-slate-700">{product.sku}</td>
+                        <td className="px-6 py-4 text-sm text-slate-700">{product.category}</td>
+                        <td className="px-6 py-4 text-sm font-medium text-slate-900">
                           {product.totalStock} {product.unit}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-300">
+                        <td className="px-6 py-4 text-sm text-slate-700">
                           {product.reorderLevel} {product.unit}
                         </td>
                         <td className="px-6 py-4">
@@ -391,11 +391,11 @@ export default function ProductsDashboard() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => setSelectedProduct(product)}
-                              className="text-[#FF8C00] hover:text-[#FF9500] text-sm font-medium"
+                              className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
                             >
                               View
                             </button>
-                            <button className="text-gray-400 hover:text-gray-300">
+                            <button className="text-slate-400 hover:text-slate-600">
                               <Edit size={16} />
                             </button>
                           </div>
@@ -403,14 +403,14 @@ export default function ProductsDashboard() {
                       </tr>
                       {expandedRows.has(product.id) && (
                         <tr>
-                          <td colSpan={7} className="px-6 py-4 bg-[#1F1F1F]">
+                          <td colSpan={7} className="px-6 py-4 bg-slate-50">
                             <div className="space-y-3">
-                              <h4 className="font-semibold text-white">Stock by Location</h4>
+                              <h4 className="font-semibold text-slate-900">Stock by Location</h4>
                               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {product.locations.map((loc, idx) => (
-                                  <div key={idx} className="bg-[#252525] rounded-lg p-4 border border-gray-800">
-                                    <p className="text-sm text-gray-400">{loc.warehouse}</p>
-                                    <p className="text-xl font-bold text-white mt-1">
+                                  <div key={idx} className="bg-white rounded-lg p-4 border border-slate-200">
+                                    <p className="text-sm text-slate-600">{loc.warehouse}</p>
+                                    <p className="text-xl font-bold text-slate-900 mt-1">
                                       {loc.quantity} {product.unit}
                                     </p>
                                   </div>
@@ -434,36 +434,36 @@ export default function ProductsDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-[#252525] border border-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer"
+                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer"
                 onClick={() => setSelectedProduct(product)}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded-full ${getStockIndicator(product)}`}></div>
                     <div>
-                      <h3 className="font-semibold text-white">{product.name}</h3>
-                      <p className="text-sm text-gray-400">{product.sku}</p>
+                      <h3 className="font-semibold text-slate-900">{product.name}</h3>
+                      <p className="text-sm text-slate-600">{product.sku}</p>
                     </div>
                   </div>
-                  <button className="text-gray-400 hover:text-gray-300">
+                  <button className="text-slate-400 hover:text-slate-600">
                     <Edit size={16} />
                   </button>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Category:</span>
-                    <span className="font-medium text-white">{product.category}</span>
+                    <span className="text-slate-600">Category:</span>
+                    <span className="font-medium text-slate-900">{product.category}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Total Stock:</span>
-                    <span className="font-bold text-white">{product.totalStock} {product.unit}</span>
+                    <span className="text-slate-600">Total Stock:</span>
+                    <span className="font-bold text-slate-900">{product.totalStock} {product.unit}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Reorder Level:</span>
-                    <span className="text-gray-300">{product.reorderLevel} {product.unit}</span>
+                    <span className="text-slate-600">Reorder Level:</span>
+                    <span className="text-slate-700">{product.reorderLevel} {product.unit}</span>
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-800">
+                <div className="mt-4 pt-4 border-t border-slate-200">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
                     {product.status}
                   </span>
@@ -488,64 +488,64 @@ export default function ProductsDashboard() {
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ type: 'spring', damping: 25 }}
-                className="bg-[#252525] border border-gray-800 h-full w-full md:w-[600px] overflow-y-auto"
+                className="bg-white h-full w-full md:w-[600px] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-6 space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-white">Product Details</h2>
+                    <h2 className="text-2xl font-bold text-slate-900">Product Details</h2>
                     <button
                       onClick={() => setSelectedProduct(null)}
-                      className="p-2 hover:bg-[#2A2A2A] rounded-lg text-gray-300"
+                      className="p-2 hover:bg-slate-100 rounded-lg"
                     >
                       <X size={24} />
                     </button>
                   </div>
 
                   <div className="space-y-6">
-                    <div className="bg-[#1F1F1F] border border-gray-800 rounded-xl p-6">
-                      <h3 className="font-semibold text-white mb-4">Product Information</h3>
+                    <div className="bg-slate-50 rounded-xl p-6">
+                      <h3 className="font-semibold text-slate-900 mb-4">Product Information</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="text-sm text-gray-400">Product Name</label>
-                          <p className="font-medium text-white">{selectedProduct.name}</p>
+                          <label className="text-sm text-slate-600">Product Name</label>
+                          <p className="font-medium text-slate-900">{selectedProduct.name}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-400">SKU / Code</label>
-                          <p className="font-medium text-white">{selectedProduct.sku}</p>
+                          <label className="text-sm text-slate-600">SKU / Code</label>
+                          <p className="font-medium text-slate-900">{selectedProduct.sku}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-400">Category</label>
-                          <p className="font-medium text-white">{selectedProduct.category}</p>
+                          <label className="text-sm text-slate-600">Category</label>
+                          <p className="font-medium text-slate-900">{selectedProduct.category}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-400">Unit of Measure</label>
-                          <p className="font-medium text-white">{selectedProduct.unit}</p>
+                          <label className="text-sm text-slate-600">Unit of Measure</label>
+                          <p className="font-medium text-slate-900">{selectedProduct.unit}</p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-400">Last Updated</label>
-                          <p className="font-medium text-white">{selectedProduct.lastUpdated}</p>
+                          <label className="text-sm text-slate-600">Last Updated</label>
+                          <p className="font-medium text-slate-900">{selectedProduct.lastUpdated}</p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-[#1F1F1F] border border-gray-800 rounded-xl p-6">
-                      <h3 className="font-semibold text-white mb-4">Stock Data</h3>
+                    <div className="bg-slate-50 rounded-xl p-6">
+                      <h3 className="font-semibold text-slate-900 mb-4">Stock Data</h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Total Stock</span>
-                          <span className="text-2xl font-bold text-white">
+                          <span className="text-slate-600">Total Stock</span>
+                          <span className="text-2xl font-bold text-slate-900">
                             {selectedProduct.totalStock} {selectedProduct.unit}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Reorder Point</span>
-                          <span className="font-medium text-white">
+                          <span className="text-slate-600">Reorder Point</span>
+                          <span className="font-medium text-slate-900">
                             {selectedProduct.reorderLevel} {selectedProduct.unit}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Status</span>
+                          <span className="text-slate-600">Status</span>
                           <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(selectedProduct.status)}`}>
                             {selectedProduct.status}
                           </span>
@@ -553,13 +553,13 @@ export default function ProductsDashboard() {
                       </div>
                     </div>
 
-                    <div className="bg-[#1F1F1F] border border-gray-800 rounded-xl p-6">
-                      <h3 className="font-semibold text-white mb-4">Stock by Warehouse</h3>
+                    <div className="bg-slate-50 rounded-xl p-6">
+                      <h3 className="font-semibold text-slate-900 mb-4">Stock by Warehouse</h3>
                       <div className="space-y-3">
                         {selectedProduct.locations.map((loc, idx) => (
-                          <div key={idx} className="flex justify-between items-center p-3 bg-[#252525] border border-gray-800 rounded-lg">
-                            <span className="text-gray-300">{loc.warehouse}</span>
-                            <span className="font-bold text-white">
+                          <div key={idx} className="flex justify-between items-center p-3 bg-white rounded-lg">
+                            <span className="text-slate-700">{loc.warehouse}</span>
+                            <span className="font-bold text-slate-900">
                               {loc.quantity} {selectedProduct.unit}
                             </span>
                           </div>
@@ -570,10 +570,10 @@ export default function ProductsDashboard() {
 
 
                     <div className="flex gap-3">
-                      <button className="flex-1 px-4 py-3 bg-[#FF8C00] text-white rounded-xl hover:bg-[#FF9500] font-medium">
+                      <button className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium">
                         Edit Product
                       </button>
-                      <button className="px-4 py-3 border border-red-800 text-red-400 rounded-xl hover:bg-red-900/20 font-medium">
+                      <button className="px-4 py-3 border border-red-200 text-red-600 rounded-xl hover:bg-red-50 font-medium">
                         <Trash2 size={20} />
                       </button>
                     </div>
@@ -598,21 +598,21 @@ export default function ProductsDashboard() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-[#252525] border border-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">Create New Product</h2>
+                  <h2 className="text-2xl font-bold text-slate-900">Create New Product</h2>
                   <button
                     onClick={() => setShowCreateModal(false)}
-                    className="p-2 hover:bg-[#2A2A2A] rounded-lg text-gray-300"
+                    className="p-2 hover:bg-slate-100 rounded-lg"
                   >
                     <X size={24} />
                   </button>
                 </div>
 
                 {createError && (
-                  <div className="bg-red-900/30 border border-red-800 text-red-400 px-4 py-3 rounded-xl">
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
                     {createError}
                   </div>
                 )}
@@ -620,69 +620,69 @@ export default function ProductsDashboard() {
                 <form onSubmit={handleCreateProduct} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-gray-300 mb-2 block">Product Name</label>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Product Name</label>
                       <input
                         type="text"
                         placeholder="Enter product name"
                         value={createFormData.name}
                         onChange={(e) => setCreateFormData({ ...createFormData, name: e.target.value })}
                         required
-                        className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white placeholder-gray-500"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-300 mb-2 block">SKU / Product Code</label>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">SKU / Product Code</label>
                       <input
                         type="text"
                         placeholder="e.g., SR-2024-001"
                         value={createFormData.sku}
                         onChange={(e) => setCreateFormData({ ...createFormData, sku: e.target.value })}
                         required
-                        className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white placeholder-gray-500"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-gray-300 mb-2 block">Category</label>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
                       <select 
                         value={createFormData.category}
                         onChange={(e) => setCreateFormData({ ...createFormData, category: e.target.value })}
                         required
-                        className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       >
                         <option value="">Select category</option>
                         {categories.filter(c => c !== 'All').map(cat => (
-                          <option key={cat} value={cat} className="bg-[#252525]">{cat}</option>
+                          <option key={cat} value={cat}>{cat}</option>
                         ))}
-                        <option value="Electronics" className="bg-[#252525]">Electronics</option>
-                        <option value="Furniture" className="bg-[#252525]">Furniture</option>
-                        <option value="Office Supplies" className="bg-[#252525]">Office Supplies</option>
-                        <option value="Raw Materials" className="bg-[#252525]">Raw Materials</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Raw Materials">Raw Materials</option>
                       </select>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-300 mb-2 block">Unit of Measure</label>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Unit of Measure</label>
                       <select 
                         value={createFormData.unit}
                         onChange={(e) => setCreateFormData({ ...createFormData, unit: e.target.value })}
                         required
-                        className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       >
                         <option value="">Select unit</option>
-                        <option value="units" className="bg-[#252525]">units</option>
-                        <option value="kg" className="bg-[#252525]">kg</option>
-                        <option value="liters" className="bg-[#252525]">liters</option>
-                        <option value="boxes" className="bg-[#252525]">boxes</option>
-                        <option value="meters" className="bg-[#252525]">meters</option>
+                        <option value="units">units</option>
+                        <option value="kg">kg</option>
+                        <option value="liters">liters</option>
+                        <option value="boxes">boxes</option>
+                        <option value="meters">meters</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-gray-300 mb-2 block">Reorder Level</label>
+                      <label className="text-sm font-medium text-slate-700 mb-2 block">Reorder Level</label>
                       <input
                         type="number"
                         placeholder="0"
@@ -690,19 +690,19 @@ export default function ProductsDashboard() {
                         onChange={(e) => setCreateFormData({ ...createFormData, reorderLevel: e.target.value })}
                         required
                         min="0"
-                        className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white placeholder-gray-500"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-gray-300 mb-2 block">Description (Optional)</label>
+                    <label className="text-sm font-medium text-slate-700 mb-2 block">Description (Optional)</label>
                     <textarea
                       rows={4}
                       placeholder="Enter product description"
                       value={createFormData.description}
                       onChange={(e) => setCreateFormData({ ...createFormData, description: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#1F1F1F] border border-gray-800 rounded-xl focus:outline-none focus:border-[#FF8C00] text-white placeholder-gray-500"
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                     ></textarea>
                   </div>
 
@@ -711,14 +711,14 @@ export default function ProductsDashboard() {
                       type="button"
                       onClick={() => setShowCreateModal(false)}
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 border border-gray-800 text-gray-300 rounded-xl hover:bg-[#2A2A2A] font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={createLoading}
-                      className="flex-1 px-6 py-3 bg-[#FF8C00] text-white rounded-xl hover:bg-[#FF9500] font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {createLoading ? 'Creating...' : 'Create Product'}
                     </button>

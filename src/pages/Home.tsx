@@ -2,17 +2,19 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import DashboardPreview from '../components/DashboardPreview';
-import CoreFeatures from '../components/CoreFeatures';
+import Workflow from '../components/Workflow';
+import BentoGrid from '../components/BentoGrid';
 import Footer from '../components/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
       <Features />
       <DashboardPreview />
-      <CoreFeatures />
+      <Workflow />
+      <BentoGrid />
       <Footer />
     </div>
   );

@@ -56,23 +56,23 @@ export default function Dashboard() {
 
   const getStatusColor = (status: string) => {
     const colors = {
-      Draft: 'bg-gray-800 text-gray-300',
-      Waiting: 'bg-yellow-900/30 text-yellow-400',
-      Ready: 'bg-blue-900/30 text-blue-400',
-      Done: 'bg-green-900/30 text-green-400',
-      Canceled: 'bg-red-900/30 text-red-400',
+      Draft: 'bg-gray-100 text-gray-700',
+      Waiting: 'bg-yellow-100 text-yellow-700',
+      Ready: 'bg-blue-100 text-blue-700',
+      Done: 'bg-green-100 text-green-700',
+      Canceled: 'bg-red-100 text-red-700',
     };
-    return colors[status as keyof typeof colors] || 'bg-gray-800 text-gray-300';
+    return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-700';
   };
 
   const getTypeColor = (type: string) => {
     const colors = {
-      Receipt: 'bg-green-900/30 text-green-400 border-green-800',
-      Delivery: 'bg-purple-900/30 text-purple-400 border-purple-800',
-      Transfer: 'bg-orange-900/30 text-orange-400 border-orange-800',
-      Adjustment: 'bg-red-900/30 text-red-400 border-red-800',
+      Receipt: 'bg-green-50 text-green-700 border-green-200',
+      Delivery: 'bg-purple-50 text-purple-700 border-purple-200',
+      Transfer: 'bg-orange-50 text-orange-700 border-orange-200',
+      Adjustment: 'bg-red-50 text-red-700 border-red-200',
     };
-    return colors[type as keyof typeof colors] || 'bg-gray-800 text-gray-300 border-gray-800';
+    return colors[type as keyof typeof colors] || 'bg-gray-50 text-gray-700 border-gray-200';
   };
 
   const filteredOperations = operations.filter(op => {
@@ -85,7 +85,7 @@ export default function Dashboard() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-lg text-gray-400">Loading dashboard...</div>
+          <div className="text-lg text-slate-600">Loading dashboard...</div>
         </div>
       </DashboardLayout>
     );
@@ -102,17 +102,17 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-[#252525] border border-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center`}>
                   <kpi.icon className="text-white" size={24} />
                 </div>
               </div>
-              <h3 className="text-sm text-gray-400 mb-1">{kpi.title}</h3>
-              <p className="text-3xl font-bold text-white">{kpi.value}</p>
+              <h3 className="text-sm text-slate-600 mb-1">{kpi.title}</h3>
+              <p className="text-3xl font-bold text-slate-900">{kpi.value}</p>
               {kpi.subValue && (
-                <p className="text-xs text-red-400 mt-1">{kpi.subValue}</p>
+                <p className="text-xs text-red-600 mt-1">{kpi.subValue}</p>
               )}
             </motion.div>
           ))}
@@ -123,13 +123,13 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-[#252525] border border-gray-800 rounded-2xl p-6 shadow-lg mb-8"
+          className="bg-white rounded-2xl p-6 shadow-lg mb-8"
         >
-          <h3 className="text-lg font-semibold text-white mb-4">Filters</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mb-4">Filters</h3>
           
           <div className="space-y-4">
             <div>
-              <label className="text-sm text-gray-400 mb-2 block">Document Type</label>
+              <label className="text-sm text-slate-600 mb-2 block">Document Type</label>
               <div className="flex flex-wrap gap-2">
                 {['All', 'Receipt', 'Delivery', 'Transfer', 'Adjustment'].map(type => (
                   <button
@@ -137,8 +137,8 @@ export default function Dashboard() {
                     onClick={() => setFilterType(type)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       filterType === type
-                        ? 'bg-[#FF8C00] text-white shadow-lg shadow-[#FF8C00]/30'
-                        : 'bg-[#1F1F1F] text-gray-300 hover:bg-[#2A2A2A] border border-gray-800'
+                        ? 'bg-indigo-600 text-white shadow-lg'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                     }`}
                   >
                     {type}
@@ -148,7 +148,7 @@ export default function Dashboard() {
             </div>
 
             <div>
-              <label className="text-sm text-gray-400 mb-2 block">Status</label>
+              <label className="text-sm text-slate-600 mb-2 block">Status</label>
               <div className="flex flex-wrap gap-2">
                 {['All', 'Draft', 'Waiting', 'Ready', 'Done', 'Canceled'].map(status => (
                   <button
@@ -156,8 +156,8 @@ export default function Dashboard() {
                     onClick={() => setFilterStatus(status)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       filterStatus === status
-                        ? 'bg-[#FF8C00] text-white shadow-lg shadow-[#FF8C00]/30'
-                        : 'bg-[#1F1F1F] text-gray-300 hover:bg-[#2A2A2A] border border-gray-800'
+                        ? 'bg-indigo-600 text-white shadow-lg'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                     }`}
                   >
                     {status}
@@ -173,55 +173,55 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-[#252525] border border-gray-800 rounded-2xl shadow-lg overflow-hidden"
+          className="bg-white rounded-2xl shadow-lg overflow-hidden"
         >
-          <div className="p-6 border-b border-gray-800">
-            <h3 className="text-lg font-semibold text-white">Recent Operations</h3>
-            <p className="text-sm text-gray-400 mt-1">
+          <div className="p-6 border-b border-slate-200">
+            <h3 className="text-lg font-semibold text-slate-900">Recent Operations</h3>
+            <p className="text-sm text-slate-600 mt-1">
               Showing {filteredOperations.length} of {operations.length} operations
             </p>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#1F1F1F]">
+              <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Document ID</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Type</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Products</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Source</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Destination</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Date</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Document ID</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Type</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Products</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Source</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Destination</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800">
+              <tbody className="divide-y divide-slate-200">
                 {filteredOperations.map((op, index) => (
                   <motion.tr
                     key={op.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="hover:bg-[#2A2A2A] transition-colors"
+                    className="hover:bg-slate-50 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm font-medium text-white">{op.id}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-slate-900">{op.id}</td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getTypeColor(op.type)}`}>
                         {op.type}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-300">{op.products}</td>
-                    <td className="px-6 py-4 text-sm text-gray-300">{op.source}</td>
-                    <td className="px-6 py-4 text-sm text-gray-300">{op.destination}</td>
+                    <td className="px-6 py-4 text-sm text-slate-700">{op.products}</td>
+                    <td className="px-6 py-4 text-sm text-slate-700">{op.source}</td>
+                    <td className="px-6 py-4 text-sm text-slate-700">{op.destination}</td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(op.status)}`}>
                         {op.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-300">{op.date}</td>
+                    <td className="px-6 py-4 text-sm text-slate-700">{op.date}</td>
                     <td className="px-6 py-4">
-                      <button className="text-[#FF8C00] hover:text-[#FF9500] text-sm font-medium">
+                      <button className="text-indigo-600 hover:text-indigo-700 text-sm font-medium">
                         View
                       </button>
                     </td>

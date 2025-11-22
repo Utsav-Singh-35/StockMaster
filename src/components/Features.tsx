@@ -1,48 +1,33 @@
 import { motion } from 'framer-motion';
-import { MapPin, BarChart3, Infinity, LayoutDashboard, Shield, ArrowRightLeft } from 'lucide-react';
+import { Package, TrendingUp, LayoutDashboard } from 'lucide-react';
 
 const features = [
   {
-    icon: MapPin,
-    title: 'Real-Time Tracking',
+    icon: Package,
+    title: 'Product Management',
     description:
-      'Monitor inventory movements across all warehouses with live updates and instant visibility.',
+      'Organize SKUs, categories, units, and multi-warehouse stock effortlessly.',
+    gradient: 'from-indigo-500 to-purple-500',
   },
   {
-    icon: BarChart3,
-    title: 'Predictive Analytics',
+    icon: TrendingUp,
+    title: 'Inventory Operations',
     description:
-      'Leverage AI-powered insights to forecast demand and prevent stockouts before they happen.',
-  },
-  {
-    icon: Infinity,
-    title: 'Seamless Integration',
-    description:
-      'Connect with your existing ERP, WMS, and logistics platforms effortlessly.',
+      'Track receiving, transfers, deliveries, and adjustments in real-time.',
+    gradient: 'from-purple-500 to-pink-500',
   },
   {
     icon: LayoutDashboard,
     title: 'Smart Dashboard',
     description:
-      'Visualize stock levels, operations, and alerts with beautiful, intuitive analytics.',
-  },
-  {
-    icon: Shield,
-    title: 'Secure Operations',
-    description:
-      'Enterprise-grade security ensures your inventory data is always protected.',
-  },
-  {
-    icon: ArrowRightLeft,
-    title: 'Multi-Warehouse Management',
-    description:
-      'Handle transfers, movements, and operations across unlimited warehouse locations.',
+      'Visualize stock levels, operations, and alerts with beautiful analytics.',
+    gradient: 'from-pink-500 to-rose-500',
   },
 ];
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 bg-[#1A1A1A]">
+    <section id="features" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -51,15 +36,15 @@ export default function Features() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-            The Smarter Way to Manage Supply Chains
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
+            Everything You Need to Manage Inventory
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Real-time visibility. Predictive power. Seamless control.
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+            Powerful features that make inventory management simple and efficient
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -67,17 +52,25 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="group relative bg-[#252525] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-800 overflow-hidden"
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 overflow-hidden"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#FF8C00]/20 flex items-center justify-center mb-6 group-hover:bg-[#FF8C00]/30 transition-colors duration-300">
-                <feature.icon size={28} className="text-[#FF8C00]" />
+              <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+
+              <div
+                className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}
+              >
+                <feature.icon size={32} className="text-white" />
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-400 leading-relaxed text-sm">{feature.description}</p>
+              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+
+              <div
+                className={`absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-br ${feature.gradient} rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+              />
             </motion.div>
           ))}
         </div>
