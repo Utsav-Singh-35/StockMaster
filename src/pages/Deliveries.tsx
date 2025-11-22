@@ -18,6 +18,14 @@ export default function Deliveries() {
   const [filterStatus, setFilterStatus] = useState('All');
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(true);
+  const [createFormData, setCreateFormData] = useState({
+    customerName: '',
+    warehouseId: '',
+    deliveryDate: '',
+    lines: [] as { productId: string; quantity: string; unit: string }[]
+  });
+  const [createError, setCreateError] = useState('');
+  const [createLoading, setCreateLoading] = useState(false);
 
   useEffect(() => {
     fetchDeliveries();
@@ -34,6 +42,42 @@ export default function Deliveries() {
       console.error('Failed to fetch deliveries:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCreateDelivery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError('');
+    setCreateLoading(true);
+
+    try {
+      const response = await deliveriesAPI.create({
+        customerName: createFormData.customerName,
+        warehouseId: createFormData.warehouseId,
+        deliveryDate: createFormData.deliveryDate,
+        lines: createFormData.lines.map(line => ({
+          productId: line.productId,
+          quantity: parseFloat(line.quantity),
+          unit: line.unit
+        }))
+      });
+
+      if (response.success) {
+        setShowCreateModal(false);
+        setCreateFormData({
+          customerName: '',
+          warehouseId: '',
+          deliveryDate: '',
+          lines: []
+        });
+        fetchDeliveries();
+      } else {
+        setCreateError(response.error?.message || 'Failed to create delivery');
+      }
+    } catch (error: any) {
+      setCreateError(error.message || 'An error occurred');
+    } finally {
+      setCreateLoading(false);
     }
   };
 
@@ -221,22 +265,51 @@ export default function Deliveries() {
                   </button>
                 </div>
 
-                <form className="space-y-6">
+                {createError && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4">
+                    {createError}
+                  </div>
+                )}
+
+                <form onSubmit={handleCreateDelivery} className="space-y-6">
                   <input
                     type="text"
                     placeholder="Customer Name"
+                    value={createFormData.customerName}
+                    onChange={(e) => setCreateFormData({ ...createFormData, customerName: e.target.value })}
+                    required
                     className="w-full px-4 py-3 border rounded-xl focus:border-purple-600 focus:outline-none"
                   />
-                  <select className="w-full px-4 py-3 border rounded-xl">
-                    <option>Main Warehouse</option>
-                    <option>Warehouse 2</option>
-                  </select>
+                  <input
+                    type="text"
+                    placeholder="Warehouse ID"
+                    value={createFormData.warehouseId}
+                    onChange={(e) => setCreateFormData({ ...createFormData, warehouseId: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 border rounded-xl focus:border-purple-600 focus:outline-none"
+                  />
+                  <input
+                    type="date"
+                    value={createFormData.deliveryDate}
+                    onChange={(e) => setCreateFormData({ ...createFormData, deliveryDate: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 border rounded-xl focus:border-purple-600 focus:outline-none"
+                  />
                   <div className="flex gap-3">
-                    <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 px-6 py-3 border rounded-xl">
+                    <button 
+                      type="button" 
+                      onClick={() => setShowCreateModal(false)} 
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 border rounded-xl disabled:opacity-50"
+                    >
                       Cancel
                     </button>
-                    <button type="submit" className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-xl">
-                      Create
+                    <button 
+                      type="submit" 
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {createLoading ? 'Creating...' : 'Create'}
                     </button>
                   </div>
                 </form>

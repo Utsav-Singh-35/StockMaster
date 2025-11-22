@@ -31,6 +31,16 @@ export default function ProductsDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>(['All']);
+  const [createFormData, setCreateFormData] = useState({
+    sku: '',
+    name: '',
+    category: '',
+    unit: '',
+    reorderLevel: '',
+    description: ''
+  });
+  const [createError, setCreateError] = useState('');
+  const [createLoading, setCreateLoading] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -56,6 +66,42 @@ export default function ProductsDashboard() {
       console.error('Failed to fetch products:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCreateProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError('');
+    setCreateLoading(true);
+
+    try {
+      const response = await productsAPI.create({
+        sku: createFormData.sku,
+        name: createFormData.name,
+        category: createFormData.category,
+        unit: createFormData.unit,
+        reorderLevel: parseInt(createFormData.reorderLevel),
+        description: createFormData.description || undefined
+      });
+
+      if (response.success) {
+        setShowCreateModal(false);
+        setCreateFormData({
+          sku: '',
+          name: '',
+          category: '',
+          unit: '',
+          reorderLevel: '',
+          description: ''
+        });
+        fetchProducts(); // Refresh the product list
+      } else {
+        setCreateError(response.error?.message || 'Failed to create product');
+      }
+    } catch (error: any) {
+      setCreateError(error.message || 'An error occurred');
+    } finally {
+      setCreateLoading(false);
     }
   };
 
@@ -565,13 +611,22 @@ export default function ProductsDashboard() {
                   </button>
                 </div>
 
-                <form className="space-y-6">
+                {createError && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                    {createError}
+                  </div>
+                )}
+
+                <form onSubmit={handleCreateProduct} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="text-sm font-medium text-slate-700 mb-2 block">Product Name</label>
                       <input
                         type="text"
                         placeholder="Enter product name"
+                        value={createFormData.name}
+                        onChange={(e) => setCreateFormData({ ...createFormData, name: e.target.value })}
+                        required
                         className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
@@ -580,6 +635,9 @@ export default function ProductsDashboard() {
                       <input
                         type="text"
                         placeholder="e.g., SR-2024-001"
+                        value={createFormData.sku}
+                        onChange={(e) => setCreateFormData({ ...createFormData, sku: e.target.value })}
+                        required
                         className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
@@ -588,40 +646,50 @@ export default function ProductsDashboard() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="text-sm font-medium text-slate-700 mb-2 block">Category</label>
-                      <select className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600">
-                        <option>Select category</option>
+                      <select 
+                        value={createFormData.category}
+                        onChange={(e) => setCreateFormData({ ...createFormData, category: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      >
+                        <option value="">Select category</option>
                         {categories.filter(c => c !== 'All').map(cat => (
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
+                        <option value="Electronics">Electronics</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Raw Materials">Raw Materials</option>
                       </select>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-slate-700 mb-2 block">Unit of Measure</label>
-                      <select className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600">
-                        <option>Select unit</option>
-                        <option>units</option>
-                        <option>kg</option>
-                        <option>liters</option>
-                        <option>boxes</option>
-                        <option>meters</option>
+                      <select 
+                        value={createFormData.unit}
+                        onChange={(e) => setCreateFormData({ ...createFormData, unit: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
+                      >
+                        <option value="">Select unit</option>
+                        <option value="units">units</option>
+                        <option value="kg">kg</option>
+                        <option value="liters">liters</option>
+                        <option value="boxes">boxes</option>
+                        <option value="meters">meters</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-medium text-slate-700 mb-2 block">Initial Stock</label>
-                      <input
-                        type="number"
-                        placeholder="0"
-                        className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
-                      />
-                    </div>
-                    <div>
                       <label className="text-sm font-medium text-slate-700 mb-2 block">Reorder Level</label>
                       <input
                         type="number"
                         placeholder="0"
+                        value={createFormData.reorderLevel}
+                        onChange={(e) => setCreateFormData({ ...createFormData, reorderLevel: e.target.value })}
+                        required
+                        min="0"
                         className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                       />
                     </div>
@@ -632,6 +700,8 @@ export default function ProductsDashboard() {
                     <textarea
                       rows={4}
                       placeholder="Enter product description"
+                      value={createFormData.description}
+                      onChange={(e) => setCreateFormData({ ...createFormData, description: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600"
                     ></textarea>
                   </div>
@@ -640,15 +710,17 @@ export default function ProductsDashboard() {
                     <button
                       type="button"
                       onClick={() => setShowCreateModal(false)}
-                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium"
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 font-medium disabled:opacity-50"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium"
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Create Product
+                      {createLoading ? 'Creating...' : 'Create Product'}
                     </button>
                   </div>
                 </form>

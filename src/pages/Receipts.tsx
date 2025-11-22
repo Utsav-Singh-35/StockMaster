@@ -19,6 +19,14 @@ export default function Receipts() {
   const [filterStatus, setFilterStatus] = useState('All');
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [loading, setLoading] = useState(true);
+  const [createFormData, setCreateFormData] = useState({
+    supplierName: '',
+    warehouseId: '',
+    expectedDate: '',
+    lines: [] as { productId: string; quantity: string; unit: string }[]
+  });
+  const [createError, setCreateError] = useState('');
+  const [createLoading, setCreateLoading] = useState(false);
 
   useEffect(() => {
     fetchReceipts();
@@ -35,6 +43,53 @@ export default function Receipts() {
       console.error('Failed to fetch receipts:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCreateReceipt = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError('');
+    setCreateLoading(true);
+
+    try {
+      const response = await receiptsAPI.create({
+        supplierName: createFormData.supplierName,
+        warehouseId: createFormData.warehouseId,
+        expectedDate: createFormData.expectedDate,
+        lines: createFormData.lines.map(line => ({
+          productId: line.productId,
+          quantity: parseFloat(line.quantity),
+          unit: line.unit
+        }))
+      });
+
+      if (response.success) {
+        setShowCreateModal(false);
+        setCreateFormData({
+          supplierName: '',
+          warehouseId: '',
+          expectedDate: '',
+          lines: []
+        });
+        fetchReceipts();
+      } else {
+        setCreateError(response.error?.message || 'Failed to create receipt');
+      }
+    } catch (error: any) {
+      setCreateError(error.message || 'An error occurred');
+    } finally {
+      setCreateLoading(false);
+    }
+  };
+
+  const handleValidateReceipt = async (receiptId: string) => {
+    try {
+      const response = await receiptsAPI.validate(receiptId);
+      if (response.success) {
+        fetchReceipts();
+      }
+    } catch (error) {
+      console.error('Failed to validate receipt:', error);
     }
   };
 
@@ -185,7 +240,10 @@ export default function Receipts() {
                           View
                         </button>
                         {receipt.status === 'Waiting' && (
-                          <button className="text-indigo-600 hover:text-indigo-700 text-sm font-medium">
+                          <button 
+                            onClick={() => handleValidateReceipt(receipt.id)}
+                            className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                          >
                             Validate
                           </button>
                         )}
@@ -222,29 +280,44 @@ export default function Receipts() {
                   </button>
                 </div>
 
-                <form className="space-y-6">
+                {createError && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                    {createError}
+                  </div>
+                )}
+
+                <form onSubmit={handleCreateReceipt} className="space-y-6">
                   <div>
                     <label className="text-sm font-medium text-slate-700 mb-2 block">Supplier Name</label>
                     <input
                       type="text"
                       placeholder="Enter supplier name"
+                      value={createFormData.supplierName}
+                      onChange={(e) => setCreateFormData({ ...createFormData, supplierName: e.target.value })}
+                      required
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
                     />
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-slate-700 mb-2 block">Warehouse</label>
-                    <select className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600">
-                      <option>Main Warehouse</option>
-                      <option>Warehouse 2</option>
-                      <option>Production Floor</option>
-                    </select>
+                    <input
+                      type="text"
+                      placeholder="Enter warehouse ID"
+                      value={createFormData.warehouseId}
+                      onChange={(e) => setCreateFormData({ ...createFormData, warehouseId: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
+                    />
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-slate-700 mb-2 block">Expected Date</label>
                     <input
                       type="date"
+                      value={createFormData.expectedDate}
+                      onChange={(e) => setCreateFormData({ ...createFormData, expectedDate: e.target.value })}
+                      required
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-green-600"
                     />
                   </div>
@@ -275,12 +348,17 @@ export default function Receipts() {
                     <button
                       type="button"
                       onClick={() => setShowCreateModal(false)}
-                      className="flex-1 px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50"
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 disabled:opacity-50"
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700">
-                      Create Receipt
+                    <button 
+                      type="submit" 
+                      disabled={createLoading}
+                      className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {createLoading ? 'Creating...' : 'Create Receipt'}
                     </button>
                   </div>
                 </form>
